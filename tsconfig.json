@@ -21,6 +21,9 @@
       "@/*": ["src/*"]
     },
 
+    /* Add this line to fix the deprecation warning */
+    "ignoreDeprecations": "6.0",
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
