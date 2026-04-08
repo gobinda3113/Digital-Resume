@@ -31,7 +31,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Use a stable Long-Term Support version of Node.js
+          node-version: 22 # Use a stable Long-Term Support version of Node.js
           cache: "npm" # Cache npm dependencies to speed up future builds
 
       # Step 3: Installs the project dependencies from package-lock.json
