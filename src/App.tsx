@@ -494,7 +494,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#47c4ff]/20 to-transparent blur-md animate-pulse-glow" />
             <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#32457c]/40 relative group glow-border">
               <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfGKibJcwEn_Jz8UUW8tClEr_R69l5zxeFSNYSG5cii7mrCJ-7WQychnvLJ-cOtHHdfHWzPIEbs2jq-TFTJAL9gzNwYJRiyXKC6z4jUZvcuyoVMaGl2b5ammZGsnXGfVpqsNFIqRFVJLFCoWsOuCv2wOJUnjF4Dq1KhyZC1UnXjQv77q95mUCQxLXh9q2i884DhTVFTrQpR7IxJwKFIurAF0-TF05TKG9avc6OAouW28aYS_G5XWbgbc7QsfKku0wxIhKGdTT7-9M"
+                src="/main.jpg"
                 alt="Gobinda Adhikari"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
               />
