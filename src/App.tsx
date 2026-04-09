@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import mainImage from "./main.jpg";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Project {
