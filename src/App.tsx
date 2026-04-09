@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import mainImage from "./main.jpg";
+import mainImage from "./main.jpg"; 
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Project {
@@ -495,7 +495,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#47c4ff]/20 to-transparent blur-md animate-pulse-glow" />
             <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#32457c]/40 relative group glow-border">
               <img
-                src={mainImage}
+                 src="/main.jpg"
                 alt="Gobinda Adhikari"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
               />
