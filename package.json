@@ -1,7 +1,8 @@
 {
-  "name": "react-vite-tailwind",
+  "name": "gobinda-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Modern portfolio website for Gobinda Adhikari - Full Stack Architect & Security Researcher",
   "type": "module",
   "scripts": {
     "dev": "vite",
