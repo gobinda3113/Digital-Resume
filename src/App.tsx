@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useCallback } from "react"; 
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Icon } from "@iconify/react"; 
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Project {
@@ -229,9 +230,7 @@ function useCountUp(target: number, isVisible: boolean, duration = 2000) {
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
-function Icon({ name, className = "" }: { name: string; className?: string }) {
-  return <span className={`material-symbols-outlined ${className}`}>{name}</span>;
-}
+// Icon component removed - using @iconify/react instead
 
 function StatusBadge({ status }: { status: Project["status"] }) {
   const colors: Record<Project["status"], string> = {
@@ -267,12 +266,12 @@ function Toast({ toasts, remove }: { toasts: Toast[]; remove: (id: number) => vo
           }`}
         >
           <Icon
-            name={t.type === "success" ? "check_circle" : t.type === "error" ? "error" : "info"}
+            icon={t.type === "success" ? "mdi:check-circle" : t.type === "error" ? "mdi:alert-circle" : "mdi:information"}
             className="text-lg"
           />
           <span className="font-label text-sm flex-1">{t.message}</span>
           <button onClick={() => remove(t.id)} className="opacity-50 hover:opacity-100 transition-opacity">
-            <Icon name="close" className="text-sm" />
+            <Icon icon="mdi:close" className="text-sm" />
           </button>
         </div>
       ))}
@@ -315,7 +314,7 @@ function SkillBar({ skill, isVisible }: { skill: Skill; isVisible: boolean }) {
     <div className="space-y-1.5">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <Icon name={skill.icon} className="text-[#47c4ff] text-sm" />
+          <Icon icon={skill.icon} className="text-[#47c4ff] text-sm" />
           <span className="font-label text-sm text-[#c4c7c9]">{skill.name}</span>
         </div>
         <span className="font-label text-xs text-[#47c4ff]">{skill.level}%</span>
@@ -372,7 +371,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               onClick={onClose}
               className="w-10 h-10 rounded-full bg-[#0a2257] flex items-center justify-center hover:bg-[#32457c] transition-colors shrink-0"
             >
-              <Icon name="close" className="text-[#dfe4ff] text-lg" />
+              <Icon icon="mdi:close" className="text-[#dfe4ff] text-lg" />
             </button>
           </div>
 
@@ -395,7 +394,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 href={project.links.live}
                 className="flex items-center gap-2 bg-[#47c4ff] text-[#003b52] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:brightness-110 active:scale-95 transition-all"
               >
-                <Icon name="open_in_new" className="text-sm" /> Live Demo
+                <Icon icon="mdi:open-in-new" className="text-sm" /> Live Demo
               </a>
             )}
             {project.links.github && (
@@ -403,7 +402,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 href={project.links.github}
                 className="flex items-center gap-2 bg-[#0a2257] border border-[#32457c]/40 text-[#dfe4ff] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:bg-[#32457c]/30 active:scale-95 transition-all"
               >
-                <Icon name="code" className="text-sm" /> Source Code
+                <Icon icon="mdi:code" className="text-sm" /> Source Code
               </a>
             )}
           </div>
@@ -454,7 +453,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
               className="group bg-gradient-to-br from-[#47c4ff] to-[#05a9e3] text-[#003b52] px-8 py-4 rounded-xl font-label font-bold flex items-center gap-2 hover:scale-[1.03] transition-transform shadow-lg shadow-[#47c4ff]/20"
             >
               View Projects{" "}
-              <Icon name="arrow_forward" className="text-lg group-hover:translate-x-1 transition-transform" />
+              <Icon icon="mdi:arrow-forward" className="text-lg group-hover:translate-x-1 transition-transform" />
             </button>
             <a
               href="#contact"
@@ -466,23 +465,23 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
               href="#"
               className="flex items-center gap-2 text-[#8f9fb7] px-4 py-4 font-label font-bold hover:text-[#47c4ff] transition-colors"
             >
-              <Icon name="download" className="text-lg" /> Resume
+              <Icon icon="mdi:download" className="text-lg" /> Resume
             </a>
           </div>
 
           {/* Social strip */}
           <div className="flex items-center gap-5 pt-2">
             {[
-              { icon: "code", label: "GitHub" },
-              { icon: "work", label: "LinkedIn" },
-              { icon: "facebook", label: "Facebook" },
-            ].map(({ icon, label }) => (
+              { icon: "mdi:github", label: "GitHub", href: "https://github.com/gobinda3113" },
+              { icon: "mdi:linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
+              { icon: "mdi:facebook", label: "Facebook", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
+            ].map(({ icon, label, href }) => (
               <a
                 key={label}
-                href="#"
+                href={href}
                 className="flex items-center gap-1.5 text-[#6073ad] hover:text-[#47c4ff] transition-colors font-label text-xs"
               >
-                <Icon name={icon} className="text-base" /> {label}
+                <Icon icon={icon} className="text-base" /> {label}
               </a>
             ))}
           </div>
@@ -511,7 +510,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
 
             <div className="absolute -top-4 -right-4 glass-panel px-4 py-3 rounded-xl border border-[#32457c]/30">
               <div className="flex items-center gap-2">
-                <Icon name="bolt" className="text-[#47c4ff] text-sm" />
+                <Icon icon="mdi:lightning-bolt" className="text-[#47c4ff] text-sm" />
                 <span className="font-label text-xs text-[#dfe4ff]">48-day streak</span>
               </div>
             </div>
@@ -527,7 +526,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#6073ad] animate-bounce">
         <span className="font-label text-[10px] uppercase tracking-widest">Scroll</span>
-        <Icon name="expand_more" className="text-xl" />
+        <Icon icon="mdi:chevron-down" className="text-xl" />
       </div>
     </section>
   );
@@ -626,7 +625,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
             href="#"
             className="flex items-center gap-2 text-[#47c4ff] font-label text-sm border-b border-[#47c4ff]/50 pb-1 hover:border-[#47c4ff] transition-colors whitespace-nowrap"
           >
-            All Repositories <Icon name="arrow_forward" className="text-base" />
+            All Repositories <Icon icon="mdi:arrow-forward" className="text-base" />
           </a>
         </div>
 
@@ -680,7 +679,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
                       <p className="text-[#8f9fb7] font-body text-sm mt-1 max-w-sm">{project.description}</p>
                     </div>
                     <div className="w-12 h-12 rounded-full bg-[#0a2257] border border-[#32457c]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
-                      <Icon name="arrow_outward" className="text-lg" />
+                      <Icon icon="mdi:arrow-top-right" className="text-lg" />
                     </div>
                   </div>
 
@@ -765,18 +764,18 @@ function AboutSection() {
         {/* Right: Trait Cards */}
         <div className={`grid grid-cols-2 gap-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
           {[
-            { icon: "cloud", label: "Cloud Native", desc: "AWS, Docker, Kubernetes, CI/CD pipelines", offset: "mt-0" },
-            { icon: "security", label: "Ethical Hacking", desc: "Penetration Testing, Network Security, CTF", offset: "mt-8" },
-            { icon: "hub", label: "Open Source", desc: "Active contributor to dev tools and libraries", offset: "-mt-8" },
-            { icon: "psychology", label: "Systems Thinking", desc: "Designing for scale, resilience, and impact", offset: "mt-0" },
-            { icon: "auto_awesome", label: "AI Integration", desc: "LLM APIs, vector search, ML pipelines", offset: "mt-4" },
-            { icon: "groups", label: "Collaboration", desc: "Mentoring, code reviews, team leadership", offset: "-mt-4" },
+            { icon: "mdi:aws", label: "Cloud Native", desc: "AWS, Docker, Kubernetes, CI/CD pipelines" },
+            { icon: "mdi:shield-account", label: "Ethical Hacking", desc: "Penetration Testing, Network Security, CTF" },
+            { icon: "mdi:github", label: "Open Source", desc: "Active contributor to dev tools and libraries" },
+            { icon: "mdi:brain", label: "Systems Thinking", desc: "Designing for scale, resilience, and impact" },
+            { icon: "mdi:robot", label: "AI Integration", desc: "LLM APIs, vector search, ML pipelines" },
+            { icon: "mdi:account-group", label: "Collaboration", desc: "Mentoring, code reviews, team leadership" },
           ].map((card) => (
             <div
               key={card.label}
-              className={`bg-[#0a1839] border border-[#32457c]/20 p-6 rounded-xl glow-border transition-all duration-300 ${card.offset}`}
+              className="bg-[#0a1839] border border-[#32457c]/20 p-6 rounded-xl glow-border transition-all duration-300"
             >
-              <Icon name={card.icon} className="text-[#47c4ff] text-2xl mb-3 block" />
+              <Icon icon={card.icon} className="text-[#47c4ff] text-2xl mb-3 block" />
               <h4 className="font-label font-bold text-[#dfe4ff] mb-1.5">{card.label}</h4>
               <p className="text-[10px] text-[#8f9fb7] leading-relaxed">{card.desc}</p>
             </div>
@@ -842,7 +841,7 @@ function GitHubSection() {
                 { icon: "bug_report", label: "89 Issues Closed" },
               ].map(({ icon, label }) => (
                 <div key={label} className="flex items-center gap-2 text-[#6073ad]">
-                  <Icon name={icon} className="text-sm" />
+                  <Icon icon={icon} className="text-sm" />
                   <span className="font-label text-xs">{label}</span>
                 </div>
               ))}
@@ -865,7 +864,7 @@ function PhilosophySection() {
       <div className="absolute inset-0 dot-pattern opacity-20" />
 
       <div className="max-w-4xl mx-auto relative text-center">
-        <Icon name="format_quote" className="text-[#47c4ff] text-6xl mb-12 block" />
+        <Icon icon="mdi:format-quote-open" className="text-[#47c4ff] text-6xl mb-12 block" />
 
         <blockquote className="font-headline text-4xl md:text-6xl font-light italic text-[#dfe4ff] leading-tight">
           "Code is not just syntax — it's the{" "}
@@ -891,7 +890,7 @@ function PhilosophySection() {
             { icon: "diversity_3", title: "Human-Centered", desc: "The best technology disappears. I build tools that empower people, not intimidate them." },
           ].map(({ icon, title, desc }) => (
             <div key={title} className="bg-[#09122b] border border-[#32457c]/20 rounded-xl p-6 glow-border transition-all">
-              <Icon name={icon} className="text-[#47c4ff] text-2xl mb-3 block" />
+              <Icon icon={icon} className="text-[#47c4ff] text-2xl mb-3 block" />
               <h4 className="font-label font-bold text-[#dfe4ff] mb-2">{title}</h4>
               <p className="font-body text-sm text-[#8f9fb7] leading-relaxed">{desc}</p>
             </div>
@@ -937,11 +936,11 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 
           <div className="space-y-5 pt-4">
             {[
-              { icon: "mail", label: "gobinda3113@gmail.com", href: "mailto:gobinda3113@gmail.com" },
-              { icon: "code", label: "github.com/gobinda3113", href: "https://github.com/gobinda3113" },
-              { icon: "work", label: "linkedin.com/in/gobinda-adhikari-33bbb2213", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
-              { icon: "facebook", label: "facebook.com/gobinda.adhikari.9634340", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
-              { icon: "location_on", label: "Nepal", href: "#" },
+              { icon: "mdi:email", label: "gobinda3113@gmail.com", href: "mailto:gobinda3113@gmail.com" },
+              { icon: "mdi:github", label: "github.com/gobinda3113", href: "https://github.com/gobinda3113" },
+              { icon: "mdi:linkedin", label: "linkedin.com/in/gobinda-adhikari-33bbb2213", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
+              { icon: "mdi:facebook", label: "facebook.com/gobinda.adhikari.9634340", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
+              { icon: "mdi:map-marker", label: "Nepal", href: "#" },
             ].map(({ icon, label, href }) => (
               <a
                 key={label}
@@ -949,7 +948,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 className="flex items-center gap-4 group"
               >
                 <div className="w-12 h-12 rounded-full bg-[#0a1839] border border-[#32457c]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300">
-                  <Icon name={icon} />
+                  <Icon icon={icon} />
                 </div>
                 <span className="font-label text-[#c4c7c9] group-hover:text-[#47c4ff] transition-colors">{label}</span>
               </a>
@@ -1035,12 +1034,12 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
             >
               {sending ? (
                 <>
-                  <Icon name="hourglass_empty" className="text-lg animate-spin-slow" />
+                  <Icon icon="mdi:hourglass" className="text-lg animate-spin-slow" />
                   Sending…
                 </>
               ) : (
                 <>
-                  <Icon name="send" className="text-lg" />
+                  <Icon icon="mdi:send" className="text-lg" />
                   Send Transmission
                 </>
               )}
@@ -1078,18 +1077,18 @@ function Footer() {
         {/* Socials */}
         <div className="flex gap-4">
           {[
-            { icon: "code", label: "GitHub" },
-            { icon: "work", label: "LinkedIn" },
-            { icon: "facebook", label: "Facebook" },
-            { icon: "mail", label: "Email" },
-          ].map(({ icon, label }) => (
+            { icon: "mdi:github", label: "GitHub", href: "https://github.com/gobinda3113" },
+            { icon: "mdi:linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
+            { icon: "mdi:facebook", label: "Facebook", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
+            { icon: "mdi:email", label: "Email", href: "mailto:gobinda3113@gmail.com" },
+          ].map(({ icon, label, href }) => (
             <a
               key={label}
-              href="#"
+              href={href}
               title={label}
               className="w-10 h-10 rounded-full bg-[#09122b] border border-[#32457c]/30 flex items-center justify-center text-[#6073ad] hover:text-[#47c4ff] hover:border-[#47c4ff]/40 transition-all"
             >
-              <Icon name={icon} className="text-base" />
+              <Icon icon={icon} className="text-base" />
             </a>
           ))}
         </div>
@@ -1102,7 +1101,7 @@ function Footer() {
           </p>
           <p className="font-label text-[10px] text-[#47c4ff] flex items-center justify-center gap-1.5">
             Built with React, Vite & Tailwind CSS{" "}
-            <Icon name="favorite" className="text-[10px] text-red-400" />
+            <Icon icon="mdi:heart" className="text-[10px] text-red-400" />
           </p>
         </div>
       </div>
@@ -1171,7 +1170,7 @@ function Navbar({
           className="md:hidden text-[#dfe4ff] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#0a1839] transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          <Icon name={mobileOpen ? "close" : "menu"} className="text-2xl" />
+          <Icon icon={mobileOpen ? "mdi:close" : "mdi:menu"} className="text-2xl" />
         </button>
       </div>
 
@@ -1222,7 +1221,7 @@ function Sidebar({ activeSection }: { activeSection: string }) {
                 : "text-[#6073ad] hover:bg-[#0a1839] hover:text-[#dfe4ff]"
             }`}
           >
-            <Icon name={icon} className="text-xl shrink-0" />
+            <Icon icon={icon} className="text-xl shrink-0" />
             <span className="opacity-0 group-hover:opacity-100 font-label text-sm whitespace-nowrap transition-opacity duration-300">
               {label}
             </span>
@@ -1298,7 +1297,7 @@ export default function App() {
         className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#0a1839] border border-[#32457c]/40 flex items-center justify-center text-[#47c4ff] hover:bg-[#47c4ff] hover:text-[#003b52] transition-all shadow-lg z-50"
         title="Back to top"
       >
-        <Icon name="arrow_upward" className="text-lg" />
+        <Icon icon="mdi:arrow-up" className="text-lg" />
       </button>
     </div>
   );
