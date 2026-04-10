@@ -475,7 +475,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
             {[
               { icon: "code", label: "GitHub" },
               { icon: "work", label: "LinkedIn" },
-              { icon: "alternate_email", label: "Twitter" },
+              { icon: "facebook", label: "Facebook" },
             ].map(({ icon, label }) => (
               <a
                 key={label}
@@ -822,7 +822,7 @@ function GitHubSection() {
 
           <div className={`md:col-span-8 bg-[#0a1839] p-8 rounded-2xl border border-[#32457c]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
             <div className="flex justify-between items-center mb-6">
-              <span className="font-label text-sm text-[#47c4ff]">github.com/gobinda-adhikari</span>
+              <span className="font-label text-sm text-[#47c4ff]">github.com/gobinda3113</span>
               <div className="flex items-center gap-3">
                 <div className="flex gap-1">
                   {["bg-[#0a2257]", "bg-[#47c4ff]/20", "bg-[#47c4ff]/55", "bg-[#47c4ff]"].map((c, i) => (
@@ -937,10 +937,11 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 
           <div className="space-y-5 pt-4">
             {[
-              { icon: "mail", label: "gobinda.adhikari@gmail.com", href: "mailto:gobinda.adhikari@gmail.com" },
-              { icon: "code", label: "github.com/gobinda-adhikari", href: "#" },
-              { icon: "work", label: "linkedin.com/in/gobinda-adhikari", href: "#" },
-              { icon: "alternate_email", label: "@gobinda_dev", href: "#" },
+              { icon: "mail", label: "gobinda3113@gmail.com", href: "mailto:gobinda3113@gmail.com" },
+              { icon: "code", label: "github.com/gobinda3113", href: "https://github.com/gobinda3113" },
+              { icon: "work", label: "linkedin.com/in/gobinda-adhikari-33bbb2213", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
+              { icon: "facebook", label: "facebook.com/gobinda.adhikari.9634340", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
+              { icon: "location_on", label: "Nepal", href: "#" },
             ].map(({ icon, label, href }) => (
               <a
                 key={label}
@@ -978,7 +979,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 </label>
                 <input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Gobinda Adhikari"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] placeholder:text-[#32457c] font-body text-sm outline-none transition-colors"
@@ -990,7 +991,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 </label>
                 <input
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder="gobinda3113@gmail.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] placeholder:text-[#32457c] font-body text-sm outline-none transition-colors"
@@ -1079,7 +1080,7 @@ function Footer() {
           {[
             { icon: "code", label: "GitHub" },
             { icon: "work", label: "LinkedIn" },
-            { icon: "alternate_email", label: "Twitter" },
+            { icon: "facebook", label: "Facebook" },
             { icon: "mail", label: "Email" },
           ].map(({ icon, label }) => (
             <a
