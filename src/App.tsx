@@ -911,35 +911,19 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
       addToast("Please fill in all required fields.", "error");
       return;
     }
-    setSending(true);
     
-    try {
-      const response = await fetch('/.netlify/functions/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          subject: form.subject,
-          message: form.message,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        addToast("Message sent! I'll get back to you soon. 🚀", "success");
-        setForm({ name: "", email: "", subject: "", message: "" });
-      } else {
-        const errorData = await response.json();
-        addToast(errorData.error || "Failed to send message. Please try again.", "error");
-      }
-    } catch (error) {
-      addToast("Network error. Please check your connection and try again.", "error");
-    } finally {
-      setSending(false);
-    }
+    // Create mailto link that opens user's email client
+    const subject = form.subject ? form.subject : `Contact from ${form.name}`;
+    const body = `Name: ${form.name}%0D%0AEmail: ${form.email}%0D%0A%0D%0A${form.message.replace(/\n/g, '%0D%0A')}`;
+    
+    const mailtoLink = `mailto:gobinda3113@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+    
+    // Open user's default email client
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    addToast("Opening your email client to send message... ✉️", "success");
+    setForm({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
