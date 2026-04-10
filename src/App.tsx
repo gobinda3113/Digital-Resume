@@ -912,10 +912,34 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
       return;
     }
     setSending(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setSending(false);
-    addToast("Message sent! I'll get back to you soon. 🚀", "success");
-    setForm({ name: "", email: "", subject: "", message: "" });
+    
+    try {
+      const response = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        addToast("Message sent! I'll get back to you soon. 🚀", "success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+      } else {
+        const errorData = await response.json();
+        addToast(errorData.error || "Failed to send message. Please try again.", "error");
+      }
+    } catch (error) {
+      addToast("Network error. Please check your connection and try again.", "error");
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
