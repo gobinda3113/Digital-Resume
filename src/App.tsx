@@ -919,26 +919,37 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
     
     const mailtoLink = `mailto:gobinda3113@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     
-    // Open user's default email client - use a more reliable method
-    try {
-      // Method 1: Try opening in new tab/window first (more reliable for web)
-      const mailtoWindow = window.open(mailtoLink, '_blank');
-      
-      // If that fails or is blocked, fall back to location.href
-      if (!mailtoWindow || mailtoWindow.closed || typeof mailtoWindow.closed === 'undefined') {
-        window.location.href = mailtoLink;
-      }
-      
-      // Show success message
-      addToast("Opening your email client to send message... ✉️", "success");
-      setForm({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      // If both methods fail, show the email content as fallback
+    // Check if we're likely in a web environment where mailto might be blocked
+    const isWebEnvironment = window.location.protocol === 'https:' || window.location.protocol === 'http:';
+    
+    if (isWebEnvironment) {
+      // In web environments, show the fallback immediately to avoid network errors
       const emailText = `To: gobinda3113@gmail.com\nSubject: ${subject}\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
       setEmailContent(emailText);
       setShowEmailFallback(true);
-      addToast("Email client not available. Your message is ready to copy.", "info");
-      console.error("Failed to open email client:", error);
+      addToast("Please copy the message below to send via email", "info");
+    } else {
+      // For local development, try the mailto link
+      try {
+        // Method 1: Try opening in new tab/window first (more reliable for web)
+        const mailtoWindow = window.open(mailtoLink, '_blank');
+        
+        // If that fails or is blocked, fall back to location.href
+        if (!mailtoWindow || mailtoWindow.closed || typeof mailtoWindow.closed === 'undefined') {
+          window.location.href = mailtoLink;
+        }
+        
+        // Show success message
+        addToast("Opening your email client to send message... ✉️", "success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+      } catch (error) {
+        // If both methods fail, show the email content as fallback
+        const emailText = `To: gobinda3113@gmail.com\nSubject: ${subject}\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+        setEmailContent(emailText);
+        setShowEmailFallback(true);
+        addToast("Email client not available. Your message is ready to copy.", "info");
+        console.error("Failed to open email client:", error);
+      }
     }
   };
 
