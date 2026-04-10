@@ -903,7 +903,6 @@ function PhilosophySection() {
 
 function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["type"]) => void }) {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
-  const [sending, setSending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1037,20 +1036,10 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 
             <button
               type="submit"
-              disabled={sending}
-              className="w-full bg-gradient-to-br from-[#47c4ff] to-[#05a9e3] text-[#003b52] font-label font-bold py-4 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-br from-[#47c4ff] to-[#05a9e3] text-[#003b52] font-label font-bold py-4 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
             >
-              {sending ? (
-                <>
-                  <Icon icon="mdi:hourglass" className="text-lg animate-spin-slow" />
-                  Sending…
-                </>
-              ) : (
-                <>
-                  <Icon icon="mdi:send" className="text-lg" />
-                  Send Transmission
-                </>
-              )}
+              <Icon icon="mdi:send" className="text-lg" />
+              Send Transmission
             </button>
           </form>
         </div>
