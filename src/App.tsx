@@ -903,6 +903,8 @@ function PhilosophySection() {
 
 function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["type"]) => void }) {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [showEmailFallback, setShowEmailFallback] = useState(false);
+  const [emailContent, setEmailContent] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -917,12 +919,27 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
     
     const mailtoLink = `mailto:gobinda3113@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     
-    // Open user's default email client
-    window.location.href = mailtoLink;
-    
-    // Show success message
-    addToast("Opening your email client to send message... ✉️", "success");
-    setForm({ name: "", email: "", subject: "", message: "" });
+    // Open user's default email client - use a more reliable method
+    try {
+      // Method 1: Try opening in new tab/window first (more reliable for web)
+      const mailtoWindow = window.open(mailtoLink, '_blank');
+      
+      // If that fails or is blocked, fall back to location.href
+      if (!mailtoWindow || mailtoWindow.closed || typeof mailtoWindow.closed === 'undefined') {
+        window.location.href = mailtoLink;
+      }
+      
+      // Show success message
+      addToast("Opening your email client to send message... ✉️", "success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      // If both methods fail, show the email content as fallback
+      const emailText = `To: gobinda3113@gmail.com\nSubject: ${subject}\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
+      setEmailContent(emailText);
+      setShowEmailFallback(true);
+      addToast("Email client not available. Your message is ready to copy.", "info");
+      console.error("Failed to open email client:", error);
+    }
   };
 
   return (
@@ -1042,6 +1059,38 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
               Send Transmission
             </button>
           </form>
+
+          {/* Email Fallback for when mailto links don't work */}
+          {showEmailFallback && (
+            <div className="mt-8 p-6 bg-[#0a1839] border border-[#32457c]/40 rounded-xl">
+              <h3 className="font-label text-[#47c4ff] text-sm uppercase tracking-wider mb-4">
+                Email Client Not Available
+              </h3>
+              <p className="font-body text-[#c4c7c9] text-sm mb-4">
+                Please copy the message below and send it to gobinda3113@gmail.com
+              </p>
+              <div className="bg-[#070d1f] border border-[#32457c]/30 rounded-lg p-4">
+                <pre className="text-[#dfe4ff] text-sm whitespace-pre-wrap font-mono">
+                  {emailContent}
+                </pre>
+              </div>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(emailContent);
+                  addToast("Message copied to clipboard!", "success");
+                }}
+                className="mt-4 bg-[#47c4ff] text-[#003b52] font-label font-bold py-2 px-4 rounded-lg hover:brightness-110 transition-all"
+              >
+                Copy Message
+              </button>
+              <button
+                onClick={() => setShowEmailFallback(false)}
+                className="mt-2 ml-2 bg-[#32457c] text-[#dfe4ff] font-label py-2 px-4 rounded-lg hover:bg-[#40528a] transition-all"
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
