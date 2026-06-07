@@ -1,0 +1,6 @@
+Contact: mailto:gobinda3113@gmail.com
+Contact: https://github.com/gobinda3113
+Encryption: https://keybase.io/gobinda3113/pgp_keys.asc
+Preferred-Languages: en
+Canonical: https://gobindaadhikari.com.np/.well-known/security.txt
+Policy: https://gobindaadhikari.com.np/.well-known/security-policy
