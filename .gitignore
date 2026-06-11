@@ -21,3 +21,6 @@ pnpm-debug.log*
 .env.production.local
 # Local Netlify folder
 .netlify
+
+# Skills lock file
+skills-lock.json

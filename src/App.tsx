@@ -1047,7 +1047,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                   placeholder="Gobinda Adhikari"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors"
+                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#94a3b8] font-body text-sm outline-none transition-colors"
                 />
               </div>
               <div className="space-y-1.5">
@@ -1059,7 +1059,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                   placeholder="gobinda3113@gmail.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors"
+                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#94a3b8] font-body text-sm outline-none transition-colors"
                 />
               </div>
             </div>
@@ -1089,7 +1089,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 placeholder="Tell me about your project or idea…"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors resize-none"
+                className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#94a3b8] font-body text-sm outline-none transition-colors resize-none"
               />
             </div>
 
