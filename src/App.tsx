@@ -604,7 +604,7 @@ function TechSection() {
         <div className="mt-16 text-center">
           <p className="font-label text-xs text-[#47c4ff] uppercase tracking-widest mb-6">Also Proficient With</p>
           <div className="flex flex-wrap justify-center gap-2">
-            {["Figma", "GraphQL", "Prisma", "Jest", "Webpack", "Nginx", "AWS", "Vercel", "Supabase", "Electron", "React Native", "Vim/Neovim", "Kali Linux", "Metasploit", "Wireshark"].map((tag) => (
+            {["Figma", "GraphQL", "Prisma", "Jest", "Webpack", "Nginx", "AWS", "Vercel", "Supabase", "Cloudflare", "n8n", "Electron", "React Native", "Vim/Neovim", "Kali Linux", "Metasploit", "Wireshark"].map((tag) => (
               <span key={tag} className="tech-tag bg-[#0a2257] border border-[#32457c]/30 px-3 py-1.5 rounded-lg text-xs font-label text-[#8f9fb7]">
                 {tag}
               </span>
@@ -1060,7 +1060,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 onChange={(e) => setForm({ ...form, subject: e.target.value })}
                 className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] font-body text-sm outline-none transition-colors"
               >
-                <option value="" className="bg-[#070d1f]">Select a topic…</option>
+                <option value="" disabled selected className="bg-[#070d1f]">Select a topic…</option>
                 <option value="project" className="bg-[#070d1f]">New Project Inquiry</option>
                 <option value="collab" className="bg-[#070d1f]">Collaboration / Partnership</option>
                 <option value="job" className="bg-[#070d1f]">Job Opportunity</option>
