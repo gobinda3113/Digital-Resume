@@ -413,14 +413,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <Icon icon="mdi:open-in-new" className="text-sm" /> Live Demo
               </a>
             )}
-            {project.links.github && (
-              <a
-                href={project.links.github}
-                className="flex items-center gap-2 bg-[#0a2257] border border-[#32457c]/40 text-[#dfe4ff] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:bg-[#32457c]/30 active:scale-95 transition-all"
-              >
-                <Icon icon="mdi:code" className="text-sm" /> Source Code
-              </a>
-            )}
+
           </div>
         </div>
       </div>
