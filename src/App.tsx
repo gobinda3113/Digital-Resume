@@ -36,6 +36,22 @@ const NAV_LINKS = ["Work", "Tech", "About", "Philosophy", "Contact"];
 const PROJECTS: Project[] = [
   {
     id: 1,
+    title: "Change Image Shape",
+    subtitle: "Free Online Image Shape Editor & Masking Tool",
+    description: "Crop images into circles, hearts, stars, hexagons, and 50+ custom shapes.",
+    longDescription:
+      "A fully client-side React + TypeScript image shape masking studio with 50+ presets across 6 categories, real-time canvas editing (scale, rotation, brightness, contrast, saturation, blur), 5 filter presets, effects (borders, drop shadows, glow), multi-background support, export to PNG / WebP / JPEG / SVG up to 4000px, batch ZIP export, and pinch-to-zoom. Built with Web Workers and WASM codecs — 100% client-side, no uploads, no signup.",
+    tags: ["Tool", "Image Processing", "Privacy-First", "PWA"],
+    stack: ["React 19", "TypeScript", "Tailwind CSS 4", "Vite 7", "Canvas API", "Web Workers", "WASM"],
+    accent: "from-pink-500/20 to-rose-600/10",
+    colSpan: "md:col-span-6",
+    rowHeight: "h-[380px]",
+    status: "Live",
+    year: "2026",
+    links: { live: "https://www.changeimageshape.com/" },
+  },
+  {
+    id: 2,
     title: "Third Eye Platform",
     subtitle: "Advanced Vulnerability Assessment Suite",
     description: "Real-time threat intelligence and automated network scanning.",
@@ -43,15 +59,15 @@ const PROJECTS: Project[] = [
       "A comprehensive cybersecurity platform featuring real-time threat intelligence feeds, automated vulnerability scanning, CVE database integration, network topology mapping, and a beautiful terminal-style dashboard. Built with Next.js, WebSockets for live updates, and integrates with Shodan/VirusTotal APIs.",
     tags: ["Cybersecurity", "Next.js", "WebSocket"],
     stack: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Docker", "Redis"],
-    colSpan: "md:col-span-8",
-    rowHeight: "h-[500px]",
+    colSpan: "md:col-span-6",
+    rowHeight: "h-[380px]",
     accent: "from-cyan-500/20 to-blue-600/10",
     status: "Live",
     year: "2024",
-    links: { live: "#", github: "#" },
+    links: { live: "https://gobinda3113.github.io/third-eye-platform/", github: "#" },
   },
   {
-    id: 2,
+    id: 3,
     title: "ShopStream",
     subtitle: "High-Velocity E-Commerce Engine",
     description: "Sub-second page loads with a cutting-edge shopping experience.",
@@ -60,14 +76,14 @@ const PROJECTS: Project[] = [
     tags: ["E-Commerce", "Node.js"],
     stack: ["Next.js", "Node.js", "MongoDB", "Redis", "Stripe", "AWS"],
     colSpan: "md:col-span-4",
-    rowHeight: "h-[500px]",
+    rowHeight: "h-[380px]",
     accent: "from-purple-500/20 to-violet-600/10",
     status: "Live",
     year: "2024",
     links: { live: "#", github: "#" },
   },
   {
-    id: 3,
+    id: 4,
     title: "DevConnect",
     subtitle: "Real-time OSS Collaboration Hub",
     description: "Real-time collaboration for open-source development teams.",
@@ -75,7 +91,7 @@ const PROJECTS: Project[] = [
       "A GitHub-integrated platform designed for async open-source collaboration. Features real-time code discussion threads, PR review workflows, contributor leaderboards, issue triage automation, and integrated CI/CD status widgets. Built with Socket.io for live presence.",
     tags: ["Open Source", "React", "Socket.io"],
     stack: ["React", "Express", "Socket.io", "PostgreSQL", "GitHub API"],
-    colSpan: "md:col-span-6",
+    colSpan: "md:col-span-4",
     rowHeight: "h-[380px]",
     accent: "from-emerald-500/20 to-teal-600/10",
     status: "Open Source",
@@ -83,7 +99,7 @@ const PROJECTS: Project[] = [
     links: { live: "#", github: "#" },
   },
   {
-    id: 4,
+    id: 5,
     title: "InsightBoard",
     subtitle: "Enterprise Analytics Platform",
     description: "Enterprise-grade analytics with AI predictive modeling.",
@@ -91,7 +107,7 @@ const PROJECTS: Project[] = [
       "An enterprise business intelligence suite featuring customizable KPI dashboards, drag-and-drop report builder, AI anomaly detection, scheduled report delivery, multi-tenant support, and role-based access control. Processes millions of events per day.",
     tags: ["Analytics", "AI/ML", "Python"],
     stack: ["React", "Python", "FastAPI", "ClickHouse", "TensorFlow", "Grafana"],
-    colSpan: "md:col-span-6",
+    colSpan: "md:col-span-4",
     rowHeight: "h-[380px]",
     accent: "from-amber-500/20 to-orange-600/10",
     status: "In Dev",
@@ -622,7 +638,9 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
             <p className="text-[#8f9fb7] mt-2 font-body">Engineering solutions across the full stack spectrum.</p>
           </div>
           <a
-            href="#"
+            href="https://github.com/gobinda3113?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 text-[#47c4ff] font-label text-sm border-b border-[#47c4ff]/50 pb-1 hover:border-[#47c4ff] transition-colors whitespace-nowrap"
           >
             All Repositories <Icon icon="mdi:arrow-forward" className="text-base" />
@@ -817,11 +835,20 @@ function GitHubSection() {
                 </div>
               ))}
             </div>
+            <a
+              href="https://github.com/gobinda3113?tab=repositories"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-label text-sm text-[#47c4ff] hover:text-[#dfe4ff] transition-colors mt-6"
+            >
+              View All Repositories
+              <Icon icon="mdi:arrow-top-right" className="text-base" />
+            </a>
           </div>
 
           <div className={`md:col-span-8 bg-[#0a1839] p-8 rounded-2xl border border-[#32457c]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
             <div className="flex justify-between items-center mb-6">
-              <span className="font-label text-sm text-[#47c4ff]">github.com/gobinda3113</span>
+              <a href="https://github.com/gobinda3113?tab=repositories" target="_blank" rel="noopener noreferrer" className="font-label text-sm text-[#47c4ff] hover:text-[#dfe4ff] transition-colors">github.com/gobinda3113</a>
               <div className="flex items-center gap-3">
                 <div className="flex gap-1">
                   {["bg-[#0a2257]", "bg-[#47c4ff]/20", "bg-[#47c4ff]/55", "bg-[#47c4ff]"].map((c, i) => (
@@ -1259,11 +1286,12 @@ function Sidebar({ activeSection }: { activeSection: string }) {
     { icon: "work", label: "Work", href: "#work" },
     { icon: "analytics", label: "Tech", href: "#tech" },
     { icon: "person", label: "About", href: "#about" },
+    { icon: "psychology", label: "Philosophy", href: "#philosophy" },
     { icon: "mail", label: "Contact", href: "#contact" },
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-16 hover:w-56 transition-all duration-500 z-40 border-r border-[#0a2257]/20 bg-[#09122b]/80 backdrop-blur-xl hidden lg:flex flex-col py-24 gap-8 px-3 overflow-hidden group">
+    <aside className="fixed left-0 top-0 h-full w-40 hover:w-56 transition-all duration-500 z-40 border-r border-[#0a2257]/20 bg-[#09122b]/80 backdrop-blur-xl hidden lg:flex flex-col py-24 gap-8 px-3 overflow-hidden group">
       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#47c4ff] to-[#2db7f2] flex items-center justify-center shrink-0 mx-auto">
         <span className="font-headline font-black text-[#003b52] text-sm">G</span>
       </div>
@@ -1279,7 +1307,9 @@ function Sidebar({ activeSection }: { activeSection: string }) {
             }`}
           >
             <Icon icon={icon} className="text-xl shrink-0" />
-            <span className="opacity-0 group-hover:opacity-100 font-label text-sm whitespace-nowrap transition-opacity duration-300">
+            <span className={`font-label text-sm whitespace-nowrap transition-opacity duration-300 ${
+              activeSection === label.toLowerCase() ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+            }`}>
               {label}
             </span>
           </a>
@@ -1334,7 +1364,7 @@ export default function App() {
       <Navbar activeSection={activeSection} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <Sidebar activeSection={activeSection} />
 
-      <main className="lg:ml-16">
+      <main className="lg:ml-40">
         <HeroSection onCTA={scrollToWork} />
         <StatsSection />
         <WorkSection addToast={addToast} />
