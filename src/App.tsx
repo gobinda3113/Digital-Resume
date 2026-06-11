@@ -278,7 +278,7 @@ function Toast({ toasts, remove }: { toasts: Toast[]; remove: (id: number) => vo
               ? "border-green-500/30 text-green-300"
               : t.type === "error"
               ? "border-red-500/30 text-red-300"
-              : "border-[#32457c] text-[#dfe4ff]"
+              : "border-[#475569] text-[#f1f5f9]"
           }`}
         >
           <Icon
@@ -302,7 +302,7 @@ function ContributionGraph() {
     Array.from({ length: days }, () => Math.floor(Math.random() * 4))
   );
   const levelColors = [
-    "bg-[#0a2257]",
+    "bg-[#3d5470]",
     "bg-[#47c4ff]/20",
     "bg-[#47c4ff]/55",
     "bg-[#47c4ff]",
@@ -331,11 +331,11 @@ function SkillBar({ skill, isVisible }: { skill: Skill; isVisible: boolean }) {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Icon icon={skill.icon} className="text-[#47c4ff] text-sm" />
-          <span className="font-label text-sm text-[#c4c7c9]">{skill.name}</span>
+          <span className="font-label text-sm text-[#e2e8f0]">{skill.name}</span>
         </div>
         <span className="font-label text-xs text-[#47c4ff]">{skill.level}%</span>
       </div>
-      <div className="h-1.5 bg-[#0a2257] rounded-full overflow-hidden">
+      <div className="h-1.5 bg-[#3d5470] rounded-full overflow-hidden">
         <div
           className="h-full rounded-full bg-gradient-to-r from-[#47c4ff] to-[#2db7f2] transition-all duration-1000 ease-out"
           style={{ width: isVisible ? `${skill.level}%` : "0%", transitionDelay: "200ms" }}
@@ -348,17 +348,17 @@ function SkillBar({ skill, isVisible }: { skill: Skill; isVisible: boolean }) {
 function StatCard({ stat, isVisible }: { stat: typeof STATS[0]; isVisible: boolean }) {
   const count = useCountUp(stat.value, isVisible);
   return (
-    <div className="bg-[#0a1839] border border-[#32457c]/30 rounded-xl p-6 text-center glow-border transition-all duration-300">
+    <div className="bg-[#2d3f55] border border-[#475569]/30 rounded-xl p-6 text-center glow-border transition-all duration-300">
       <div className="font-headline text-4xl font-black text-[#47c4ff] mb-1">
         {count.toLocaleString()}{stat.suffix}
       </div>
-      <div className="font-label text-xs text-[#96a9e6] uppercase tracking-widest">{stat.label}</div>
+      <div className="font-label text-xs text-[#cbd5e1] uppercase tracking-widest">{stat.label}</div>
     </div>
   );
 }
 
 // ─── Project Modal ─────────────────────────────────────────────────────────────
-function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
+function ProjectModal({ project, onClose, addToast }: { project: Project; onClose: () => void; addToast?: (msg: string, type: "success" | "info" | "error") => void }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKey);
@@ -368,36 +368,36 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop bg-[#070d1f]/80"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop bg-[#1e293b]/80"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-[#0a1839] border border-[#32457c]/40 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up glow-border">
+      <div className="bg-[#2d3f55] border border-[#475569]/40 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up glow-border">
         <div className={`h-2 rounded-t-2xl bg-gradient-to-r ${project.accent.replace("/20", "").replace("/10", "")} from-[#47c4ff] to-[#2db7f2]`} />
         <div className="p-8 space-y-6">
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <StatusBadge status={project.status} />
-                <span className="font-label text-xs text-[#96a9e6]">{project.year}</span>
+                <span className="font-label text-xs text-[#cbd5e1]">{project.year}</span>
               </div>
-              <h3 className="font-headline text-3xl font-bold text-[#dfe4ff]">{project.title}</h3>
-              <p className="text-[#8f9fb7] font-body mt-1">{project.subtitle}</p>
+              <h3 className="font-headline text-3xl font-bold text-[#f1f5f9]">{project.title}</h3>
+              <p className="text-[#94a3b8] font-body mt-1">{project.subtitle}</p>
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 rounded-full bg-[#0a2257] flex items-center justify-center hover:bg-[#32457c] transition-colors shrink-0"
+              className="w-10 h-10 rounded-full bg-[#3d5470] flex items-center justify-center hover:bg-[#475569] transition-colors shrink-0"
             >
-              <Icon icon="mdi:close" className="text-[#dfe4ff] text-lg" />
+              <Icon icon="mdi:close" className="text-[#f1f5f9] text-lg" />
             </button>
           </div>
 
-          <p className="font-body text-[#c4c7c9] leading-relaxed">{project.longDescription}</p>
+          <p className="font-body text-[#e2e8f0] leading-relaxed">{project.longDescription}</p>
 
           <div>
             <h4 className="font-label text-xs text-[#47c4ff] uppercase tracking-widest mb-3">Tech Stack</h4>
             <div className="flex flex-wrap gap-2">
               {project.stack.map((t) => (
-                <span key={t} className="tech-tag bg-[#0a2257] border border-[#32457c]/40 px-3 py-1.5 rounded-lg text-xs font-label text-[#c4c7c9]">
+                <span key={t} className="tech-tag bg-[#3d5470] border border-[#475569]/40 px-3 py-1.5 rounded-lg text-xs font-label text-[#e2e8f0]">
                   {t}
                 </span>
               ))}
@@ -406,12 +406,23 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
 
           <div className="flex gap-3 pt-2">
             {project.links.live && (
-              <a
-                href={project.links.live}
-                className="flex items-center gap-2 bg-[#47c4ff] text-[#003b52] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:brightness-110 active:scale-95 transition-all"
-              >
-                <Icon icon="mdi:open-in-new" className="text-sm" /> Live Demo
-              </a>
+              project.links.live !== "#" ? (
+                <a
+                  href={project.links.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-[#47c4ff] text-[#003b52] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:brightness-110 active:scale-95 transition-all"
+                >
+                  <Icon icon="mdi:open-in-new" className="text-sm" /> Live Demo
+                </a>
+              ) : (
+                <button
+                  onClick={() => addToast?.("Visit GitHub repo to see the live demo.", "info")}
+                  className="flex items-center gap-2 bg-[#47c4ff] text-[#003b52] px-5 py-2.5 rounded-lg font-label font-bold text-sm hover:brightness-110 active:scale-95 transition-all"
+                >
+                  <Icon icon="mdi:open-in-new" className="text-sm" /> Live Demo
+                </button>
+              )
             )}
 
           </div>
@@ -443,16 +454,16 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
                 Architecting Digital Futures
               </span>
             </div>
-            <h1 className="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter text-[#dfe4ff] leading-none">
+            <h1 className="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter text-[#f1f5f9] leading-none">
               Gobinda <br />
               <span className="gradient-text">Adhikari</span>
             </h1>
             <div className="h-10 flex items-center">
-              <p className="font-body text-xl text-[#8f9fb7] typing-cursor">{typedRole}</p>
+              <p className="font-body text-xl text-[#94a3b8] typing-cursor">{typedRole}</p>
             </div>
           </div>
 
-          <p className="font-body text-lg text-[#c4c7c9] max-w-lg leading-relaxed">
+          <p className="font-body text-lg text-[#e2e8f0] max-w-lg leading-relaxed">
             Building resilient, scalable architectures that solve real-world complexities — from pixel-perfect UIs to battle-hardened security systems.
           </p>
 
@@ -466,13 +477,13 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
             </button>
             <a
               href="#contact"
-              className="bg-[#0b1d48] border border-[#32457c]/40 text-[#dfe4ff] px-8 py-4 rounded-xl font-label font-bold hover:bg-[#0a2257] hover:border-[#47c4ff]/30 transition-all"
+              className="bg-[#334155] border border-[#475569]/40 text-[#f1f5f9] px-8 py-4 rounded-xl font-label font-bold hover:bg-[#3d5470] hover:border-[#47c4ff]/30 transition-all"
             >
               Contact Me
             </a>
             <a
               href="#"
-              className="flex items-center gap-2 text-[#8f9fb7] px-4 py-4 font-label font-bold hover:text-[#47c4ff] transition-colors"
+              className="flex items-center gap-2 text-[#94a3b8] px-4 py-4 font-label font-bold hover:text-[#47c4ff] transition-colors"
             >
               <Icon icon="mdi:download" className="text-lg" /> Resume
             </a>
@@ -488,7 +499,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
               <a
                 key={label}
                 href={href}
-                className="flex items-center gap-1.5 text-[#6073ad] hover:text-[#47c4ff] transition-colors font-label text-xs"
+                className="flex items-center gap-1.5 text-[#94a3b8] hover:text-[#47c4ff] transition-colors font-label text-xs"
               >
                 <Icon icon={icon} className="text-base" /> {label}
               </a>
@@ -500,27 +511,27 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
           {/* Avatar ring */}
           <div className="relative">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#47c4ff]/20 to-transparent blur-md animate-pulse-glow" />
-            <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#32457c]/40 relative group glow-border">
+            <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#475569]/40 relative group glow-border">
               <img
                  src="https://i.ibb.co/d47mWy7h/Chat-GPT-Image-Apr-2-2026-08-33-06-AM.jpg"
                 alt="Gobinda Adhikari"
                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#070d1f]/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1e293b]/60 to-transparent" />
             </div>
 
             {/* Floating badges */}
-            <div className="absolute -bottom-4 -left-4 glass-panel px-4 py-3 rounded-xl border border-[#32457c]/30 animate-float">
+            <div className="absolute -bottom-4 -left-4 glass-panel px-4 py-3 rounded-xl border border-[#475569]/30 animate-float">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse" />
-                <span className="font-label text-xs text-[#dfe4ff]">Open to Work</span>
+                <span className="font-label text-xs text-[#f1f5f9]">Open to Work</span>
               </div>
             </div>
 
-            <div className="absolute -top-4 -right-4 glass-panel px-4 py-3 rounded-xl border border-[#32457c]/30">
+            <div className="absolute -top-4 -right-4 glass-panel px-4 py-3 rounded-xl border border-[#475569]/30">
               <div className="flex items-center gap-2">
                 <Icon icon="mdi:lightning-bolt" className="text-[#47c4ff] text-sm" />
-                <span className="font-label text-xs text-[#dfe4ff]">48-day streak</span>
+                <span className="font-label text-xs text-[#f1f5f9]">48-day streak</span>
               </div>
             </div>
 
@@ -533,7 +544,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#6073ad] animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#94a3b8] animate-bounce">
         <span className="font-label text-[10px] uppercase tracking-widest">Scroll</span>
         <Icon icon="mdi:chevron-down" className="text-xl" />
       </div>
@@ -544,7 +555,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
 function StatsSection() {
   const { ref, isVisible } = useIntersectionObserver();
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="py-20 px-8 md:px-24 bg-[#09122b] border-y border-[#0a2257]">
+    <section ref={ref as React.RefObject<HTMLElement>} className="py-20 px-8 md:px-24 bg-[#263548] border-y border-[#3d5470]">
       <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
         {STATS.map((stat) => (
           <StatCard key={stat.label} stat={stat} isVisible={isVisible} />
@@ -571,7 +582,7 @@ function TechSection() {
           <h2 className="font-headline text-5xl font-extrabold mt-2 mb-4">
             Mastering the <span className="gradient-text">Stack</span>
           </h2>
-          <p className="font-body text-[#8f9fb7]">From hardware logic to pixel-perfect interfaces</p>
+          <p className="font-body text-[#94a3b8]">From hardware logic to pixel-perfect interfaces</p>
         </div>
 
         {/* Category Tabs */}
@@ -583,7 +594,7 @@ function TechSection() {
               className={`px-5 py-2 rounded-full font-label text-sm transition-all duration-300 ${
                 activeCategory === cat
                   ? "bg-[#47c4ff] text-[#003b52] font-bold shadow-lg shadow-[#47c4ff]/20"
-                  : "bg-[#0a1839] border border-[#32457c]/30 text-[#8f9fb7] hover:border-[#47c4ff]/40 hover:text-[#dfe4ff]"
+                  : "bg-[#2d3f55] border border-[#475569]/30 text-[#94a3b8] hover:border-[#47c4ff]/40 hover:text-[#f1f5f9]"
               }`}
             >
               {cat}
@@ -594,7 +605,7 @@ function TechSection() {
         {/* Skills Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {SKILLS[activeCategory].map((skill) => (
-            <div key={skill.name} className="bg-[#0a1839] border border-[#32457c]/20 rounded-xl p-6 glow-border">
+            <div key={skill.name} className="bg-[#2d3f55] border border-[#475569]/20 rounded-xl p-6 glow-border">
               <SkillBar skill={skill} isVisible={isVisible} />
             </div>
           ))}
@@ -605,7 +616,7 @@ function TechSection() {
           <p className="font-label text-xs text-[#47c4ff] uppercase tracking-widest mb-6">Also Proficient With</p>
           <div className="flex flex-wrap justify-center gap-2">
             {["Figma", "GraphQL", "Prisma", "Jest", "Webpack", "Nginx", "AWS", "Vercel", "Supabase", "Cloudflare", "n8n", "Electron", "React Native", "Vim/Neovim", "Kali Linux", "Metasploit", "Wireshark"].map((tag) => (
-              <span key={tag} className="tech-tag bg-[#0a2257] border border-[#32457c]/30 px-3 py-1.5 rounded-lg text-xs font-label text-[#8f9fb7]">
+              <span key={tag} className="tech-tag bg-[#3d5470] border border-[#475569]/30 px-3 py-1.5 rounded-lg text-xs font-label text-[#94a3b8]">
                 {tag}
               </span>
             ))}
@@ -622,13 +633,13 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
   const filters = ["All", "Cybersecurity", "E-Commerce", "Open Source", "Analytics"];
 
   return (
-    <section className="py-32 px-8 md:px-24 bg-[#070d1f]" id="work">
+    <section className="py-32 px-8 md:px-24 bg-[#1e293b]" id="work">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
             <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">Portfolio</span>
-            <h2 className="font-headline text-5xl font-extrabold text-[#dfe4ff] mt-1">Selected Works</h2>
-            <p className="text-[#8f9fb7] mt-2 font-body">Engineering solutions across the full stack spectrum.</p>
+            <h2 className="font-headline text-5xl font-extrabold text-[#f1f5f9] mt-1">Selected Works</h2>
+            <p className="text-[#94a3b8] mt-2 font-body">Engineering solutions across the full stack spectrum.</p>
           </div>
           <a
             href="https://github.com/gobinda3113?tab=repositories"
@@ -649,7 +660,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
               className={`px-4 py-1.5 rounded-full font-label text-xs transition-all ${
                 filter === f
                   ? "bg-[#47c4ff]/15 text-[#47c4ff] border border-[#47c4ff]/40"
-                  : "bg-transparent border border-[#32457c]/30 text-[#6073ad] hover:text-[#dfe4ff]"
+                  : "bg-transparent border border-[#475569]/30 text-[#94a3b8] hover:text-[#f1f5f9]"
               }`}
             >
               {f}
@@ -661,7 +672,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
           {PROJECTS.filter((p) => filter === "All" || p.tags.some((t) => t.includes(filter) || filter.includes(t))).map((project) => (
             <div
               key={project.id}
-              className={`${project.colSpan} project-card group relative overflow-hidden rounded-2xl bg-[#09122b] border border-[#32457c]/20 cursor-pointer`}
+              className={`${project.colSpan} project-card group relative overflow-hidden rounded-2xl bg-[#263548] border border-[#475569]/20 cursor-pointer`}
               onClick={() => setActiveProject(project)}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
@@ -671,7 +682,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2 flex-wrap">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="bg-[#0a2257] text-[#47c4ff] border border-[#47c4ff]/20 px-3 py-1 rounded-full text-[10px] font-label">
+                      <span key={tag} className="bg-[#3d5470] text-[#47c4ff] border border-[#47c4ff]/20 px-3 py-1 rounded-full text-[10px] font-label">
                         {tag}
                       </span>
                     ))}
@@ -684,22 +695,22 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
                   <div className="flex items-end justify-between">
                     <div>
                       <p className="font-label text-[#47c4ff] text-xs mb-1">{project.year}</p>
-                      <h3 className="font-headline text-2xl md:text-3xl font-bold text-[#dfe4ff] group-hover:text-white transition-colors">
+                      <h3 className="font-headline text-2xl md:text-3xl font-bold text-[#f1f5f9] group-hover:text-white transition-colors">
                         {project.title}
                       </h3>
-                      <p className="text-[#8f9fb7] font-body text-sm mt-1 max-w-sm">{project.description}</p>
+                      <p className="text-[#94a3b8] font-body text-sm mt-1 max-w-sm">{project.description}</p>
                     </div>
-                    <div className="w-12 h-12 rounded-full bg-[#0a2257] border border-[#32457c]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-[#3d5470] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
                       <Icon icon="mdi:arrow-top-right" className="text-lg" />
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#32457c]/20">
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#475569]/20">
                     {project.stack.slice(0, 4).map((t) => (
-                      <span key={t} className="font-label text-[10px] text-[#6073ad]">{t}</span>
+                      <span key={t} className="font-label text-[10px] text-[#94a3b8]">{t}</span>
                     ))}
                     {project.stack.length > 4 && (
-                      <span className="font-label text-[10px] text-[#6073ad]">+{project.stack.length - 4} more</span>
+                      <span className="font-label text-[10px] text-[#94a3b8]">+{project.stack.length - 4} more</span>
                     )}
                   </div>
                 </div>
@@ -712,7 +723,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
         <div className="text-center mt-12">
           <button
             onClick={() => addToast("More projects coming soon! Check GitHub for the latest.", "info")}
-            className="bg-[#0a1839] border border-[#32457c]/30 text-[#dfe4ff] px-8 py-3 rounded-xl font-label font-bold hover:border-[#47c4ff]/40 hover:text-[#47c4ff] transition-all"
+            className="bg-[#2d3f55] border border-[#475569]/30 text-[#f1f5f9] px-8 py-3 rounded-xl font-label font-bold hover:border-[#47c4ff]/40 hover:text-[#47c4ff] transition-all"
           >
             Load More Projects
           </button>
@@ -720,7 +731,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
       </div>
 
       {activeProject && (
-        <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+        <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} addToast={addToast} />
       )}
     </section>
   );
@@ -732,7 +743,7 @@ function AboutSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-32 px-8 md:px-24 bg-[#09122b]"
+      className="py-32 px-8 md:px-24 bg-[#263548]"
       id="about"
     >
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-24 items-start">
@@ -740,11 +751,11 @@ function AboutSection() {
         <div className={`space-y-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
           <div>
             <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">The Story</span>
-            <h2 className="font-headline text-4xl font-bold tracking-tight text-[#dfe4ff] mt-2 flex items-center gap-4">
+            <h2 className="font-headline text-4xl font-bold tracking-tight text-[#f1f5f9] mt-2 flex items-center gap-4">
               <span className="w-12 h-px bg-[#47c4ff]" /> The Journey
             </h2>
           </div>
-          <div className="space-y-6 font-body text-lg text-[#c4c7c9] leading-relaxed">
+          <div className="space-y-6 font-body text-lg text-[#e2e8f0] leading-relaxed">
             <p>
               I'm a passionate Full Stack Developer specializing in high-performance, scalable web applications. My work is fueled by deep curiosity about Cloud Architecture, DevOps pipelines, and the human problems they solve.
             </p>
@@ -762,11 +773,11 @@ function AboutSection() {
                 className="pl-10 pb-8 relative"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-[#47c4ff] border-2 border-[#09122b] shadow-lg shadow-[#47c4ff]/40" />
+                <div className="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-[#47c4ff] border-2 border-[#263548] shadow-lg shadow-[#47c4ff]/40" />
                 <span className="font-label text-[#47c4ff] text-xs">{item.year}</span>
-                <h4 className="font-headline font-bold text-[#dfe4ff] mt-0.5">{item.title}</h4>
-                <p className="font-label text-xs text-[#8f9fb7] mb-1">{item.company}</p>
-                <p className="font-body text-sm text-[#c4c7c9]/80">{item.desc}</p>
+                <h4 className="font-headline font-bold text-[#f1f5f9] mt-0.5">{item.title}</h4>
+                <p className="font-label text-xs text-[#94a3b8] mb-1">{item.company}</p>
+                <p className="font-body text-sm text-[#e2e8f0]/80">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -784,11 +795,11 @@ function AboutSection() {
           ].map((card) => (
             <div
               key={card.label}
-              className="bg-[#0a1839] border border-[#32457c]/20 p-6 rounded-xl glow-border transition-all duration-300"
+              className="bg-[#2d3f55] border border-[#475569]/20 p-6 rounded-xl glow-border transition-all duration-300"
             >
               <Icon icon={card.icon} className="text-[#47c4ff] text-2xl mb-3 block" />
-              <h4 className="font-label font-bold text-[#dfe4ff] mb-1.5">{card.label}</h4>
-              <p className="text-[10px] text-[#8f9fb7] leading-relaxed">{card.desc}</p>
+              <h4 className="font-label font-bold text-[#f1f5f9] mb-1.5">{card.label}</h4>
+              <p className="text-[10px] text-[#94a3b8] leading-relaxed">{card.desc}</p>
             </div>
           ))}
         </div>
@@ -803,7 +814,7 @@ function GitHubSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-32 px-8 md:px-24 border-y border-[#0a2257]"
+      className="py-32 px-8 md:px-24 border-y border-[#3d5470]"
     >
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-12 gap-12 items-center">
@@ -812,7 +823,7 @@ function GitHubSection() {
             <h2 className="font-headline text-4xl font-extrabold mb-6 mt-2">
               Coding <span className="gradient-text">Consistency</span>
             </h2>
-            <p className="text-[#8f9fb7] leading-relaxed font-body mb-8">
+            <p className="text-[#94a3b8] leading-relaxed font-body mb-8">
               My GitHub is a living map of growth. I believe in the power of continuous iteration — shipping small, thinking big.
             </p>
             <div className="space-y-4">
@@ -822,9 +833,9 @@ function GitHubSection() {
                 { label: "Repositories", value: "47" },
                 { label: "Stars Earned", value: "312+" },
               ].map(({ label, value }) => (
-                <div key={label} className="flex justify-between items-end border-b border-[#32457c]/20 pb-2">
-                  <span className="font-label text-xs uppercase text-[#6073ad]">{label}</span>
-                  <span className="font-headline text-xl font-bold text-[#dfe4ff]">{value}</span>
+                <div key={label} className="flex justify-between items-end border-b border-[#475569]/20 pb-2">
+                  <span className="font-label text-xs uppercase text-[#94a3b8]">{label}</span>
+                  <span className="font-headline text-xl font-bold text-[#f1f5f9]">{value}</span>
                 </div>
               ))}
             </div>
@@ -832,35 +843,35 @@ function GitHubSection() {
               href="https://github.com/gobinda3113?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-label text-sm text-[#47c4ff] hover:text-[#dfe4ff] transition-colors mt-6"
+              className="inline-flex items-center gap-2 font-label text-sm text-[#47c4ff] hover:text-[#f1f5f9] transition-colors mt-6"
             >
               View All Repositories
               <Icon icon="mdi:arrow-top-right" className="text-base" />
             </a>
           </div>
 
-          <div className={`md:col-span-8 bg-[#0a1839] p-8 rounded-2xl border border-[#32457c]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+          <div className={`md:col-span-8 bg-[#2d3f55] p-8 rounded-2xl border border-[#475569]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
             <div className="flex justify-between items-center mb-6">
-              <a href="https://github.com/gobinda3113?tab=repositories" target="_blank" rel="noopener noreferrer" className="font-label text-sm text-[#47c4ff] hover:text-[#dfe4ff] transition-colors">github.com/gobinda3113</a>
+              <a href="https://github.com/gobinda3113?tab=repositories" target="_blank" rel="noopener noreferrer" className="font-label text-sm text-[#47c4ff] hover:text-[#f1f5f9] transition-colors">github.com/gobinda3113</a>
               <div className="flex items-center gap-3">
                 <div className="flex gap-1">
-                  {["bg-[#0a2257]", "bg-[#47c4ff]/20", "bg-[#47c4ff]/55", "bg-[#47c4ff]"].map((c, i) => (
+                  {["bg-[#3d5470]", "bg-[#47c4ff]/20", "bg-[#47c4ff]/55", "bg-[#47c4ff]"].map((c, i) => (
                     <div key={i} className={`w-2.5 h-2.5 rounded-sm ${c}`} />
                   ))}
                 </div>
-                <span className="font-label text-[10px] text-[#6073ad]">Less → More</span>
+                <span className="font-label text-[10px] text-[#94a3b8]">Less → More</span>
               </div>
             </div>
 
             <ContributionGraph />
 
-            <div className="mt-6 pt-6 border-t border-[#32457c]/10 flex flex-wrap gap-6">
+            <div className="mt-6 pt-6 border-t border-[#475569]/10 flex flex-wrap gap-6">
               {[
                 { icon: "star", label: "Most Used: TypeScript" },
                 { icon: "merge", label: "137 PRs Merged" },
                 { icon: "bug_report", label: "89 Issues Closed" },
               ].map(({ icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-[#6073ad]">
+                <div key={label} className="flex items-center gap-2 text-[#94a3b8]">
                   <Icon icon={icon} className="text-sm" />
                   <span className="font-label text-xs">{label}</span>
                 </div>
@@ -875,9 +886,9 @@ function GitHubSection() {
 
 function PhilosophySection() {
   return (
-    <section className="py-48 px-8 md:px-24 bg-[#070d1f] overflow-hidden relative" id="philosophy">
+    <section className="py-48 px-8 md:px-24 bg-[#1e293b] overflow-hidden relative" id="philosophy">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-        <span className="font-headline text-[15vw] font-black text-[#dfe4ff]/3 whitespace-nowrap">
+        <span className="font-headline text-[15vw] font-black text-[#f1f5f9]/3 whitespace-nowrap">
           INNOVATION
         </span>
       </div>
@@ -886,7 +897,7 @@ function PhilosophySection() {
       <div className="max-w-4xl mx-auto relative text-center">
         <Icon icon="mdi:format-quote-open" className="text-[#47c4ff] text-6xl mb-12 block" />
 
-        <blockquote className="font-headline text-4xl md:text-6xl font-light italic text-[#dfe4ff] leading-tight">
+        <blockquote className="font-headline text-4xl md:text-6xl font-light italic text-[#f1f5f9] leading-tight">
           "Code is not just syntax — it's the{" "}
           <span className="font-extrabold not-italic gradient-text underline decoration-2 underline-offset-8">
             blueprint
@@ -895,11 +906,11 @@ function PhilosophySection() {
         </blockquote>
 
         <div className="mt-16 flex items-center justify-center gap-4">
-          <div className="h-px w-12 bg-[#32457c]" />
-          <cite className="font-label text-[#8f9fb7] tracking-widest uppercase text-sm not-italic">
+          <div className="h-px w-12 bg-[#475569]" />
+          <cite className="font-label text-[#94a3b8] tracking-widest uppercase text-sm not-italic">
             Core Philosophy
           </cite>
-          <div className="h-px w-12 bg-[#32457c]" />
+          <div className="h-px w-12 bg-[#475569]" />
         </div>
 
         {/* Principles */}
@@ -909,10 +920,10 @@ function PhilosophySection() {
             { icon: "speed", title: "Performance Obsessed", desc: "Milliseconds matter. I optimize for real users on real devices, not just benchmarks." },
             { icon: "diversity_3", title: "Human-Centered", desc: "The best technology disappears. I build tools that empower people, not intimidate them." },
           ].map(({ icon, title, desc }) => (
-            <div key={title} className="bg-[#09122b] border border-[#32457c]/20 rounded-xl p-6 glow-border transition-all">
+            <div key={title} className="bg-[#263548] border border-[#475569]/20 rounded-xl p-6 glow-border transition-all">
               <Icon icon={icon} className="text-[#47c4ff] text-2xl mb-3 block" />
-              <h4 className="font-label font-bold text-[#dfe4ff] mb-2">{title}</h4>
-              <p className="font-body text-sm text-[#8f9fb7] leading-relaxed">{desc}</p>
+              <h4 className="font-label font-bold text-[#f1f5f9] mb-2">{title}</h4>
+              <p className="font-body text-sm text-[#94a3b8] leading-relaxed">{desc}</p>
             </div>
           ))}
         </div>
@@ -974,7 +985,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
   };
 
   return (
-    <section className="py-32 px-8 md:px-24 bg-[#09122b]" id="contact">
+    <section className="py-32 px-8 md:px-24 bg-[#263548]" id="contact">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* Left */}
         <div className="space-y-8">
@@ -985,7 +996,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
               <span className="gradient-text">Together.</span>
             </h2>
           </div>
-          <p className="font-body text-xl text-[#c4c7c9] leading-relaxed max-w-md">
+          <p className="font-body text-xl text-[#e2e8f0] leading-relaxed max-w-md">
             Have a project in mind? Want to discuss systems architecture or just connect? My door is always open for innovators.
           </p>
 
@@ -1002,33 +1013,33 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 href={href}
                 className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 rounded-full bg-[#0a1839] border border-[#32457c]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300">
+                <div className="w-12 h-12 rounded-full bg-[#2d3f55] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300">
                   <Icon icon={icon} />
                 </div>
-                <span className="font-label text-[#c4c7c9] group-hover:text-[#47c4ff] transition-colors">{label}</span>
+                <span className="font-label text-[#e2e8f0] group-hover:text-[#47c4ff] transition-colors">{label}</span>
               </a>
             ))}
           </div>
 
           {/* Availability card */}
-          <div className="bg-[#0a1839] border border-[#32457c]/20 rounded-xl p-6 glow-border">
+          <div className="bg-[#2d3f55] border border-[#475569]/20 rounded-xl p-6 glow-border">
             <div className="flex items-center gap-3 mb-3">
               <div className="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse" />
-              <span className="font-label font-bold text-[#dfe4ff]">Currently Available</span>
+              <span className="font-label font-bold text-[#f1f5f9]">Currently Available</span>
             </div>
-            <p className="font-body text-sm text-[#8f9fb7]">
+            <p className="font-body text-sm text-[#94a3b8]">
               Open to full-time roles, freelance projects, and open-source collaborations. Typical response time: &lt;24 hours.
             </p>
           </div>
         </div>
 
         {/* Right: Form */}
-        <div className="bg-[#0a1839] p-8 md:p-10 rounded-2xl border border-[#32457c]/20 shadow-2xl glow-border">
-          <h3 className="font-headline text-2xl font-bold text-[#dfe4ff] mb-8">Send a Message</h3>
+        <div className="bg-[#2d3f55] p-8 md:p-10 rounded-2xl border border-[#475569]/20 shadow-2xl glow-border">
+          <h3 className="font-headline text-2xl font-bold text-[#f1f5f9] mb-8">Send a Message</h3>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="font-label text-xs text-[#6073ad] uppercase tracking-wider">
+                <label className="font-label text-xs text-[#94a3b8] uppercase tracking-wider">
                   Full Name <span className="text-[#47c4ff]">*</span>
                 </label>
                 <input
@@ -1036,11 +1047,11 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                   placeholder="Gobinda Adhikari"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] placeholder:text-[#32457c] font-body text-sm outline-none transition-colors"
+                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors"
                 />
               </div>
               <div className="space-y-1.5">
-                <label className="font-label text-xs text-[#6073ad] uppercase tracking-wider">
+                <label className="font-label text-xs text-[#94a3b8] uppercase tracking-wider">
                   Email <span className="text-[#47c4ff]">*</span>
                 </label>
                 <input
@@ -1048,29 +1059,29 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                   placeholder="gobinda3113@gmail.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] placeholder:text-[#32457c] font-body text-sm outline-none transition-colors"
+                  className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-label text-xs text-[#6073ad] uppercase tracking-wider">Subject</label>
+              <label className="font-label text-xs text-[#94a3b8] uppercase tracking-wider">Subject</label>
               <select
                 value={form.subject}
                 onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] font-body text-sm outline-none transition-colors"
+                className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] font-body text-sm outline-none transition-colors"
               >
-                <option value="" disabled selected className="bg-[#070d1f]">Select a topic…</option>
-                <option value="project" className="bg-[#070d1f]">New Project Inquiry</option>
-                <option value="collab" className="bg-[#070d1f]">Collaboration / Partnership</option>
-                <option value="job" className="bg-[#070d1f]">Job Opportunity</option>
-                <option value="security" className="bg-[#070d1f]">Security Consultation</option>
-                <option value="other" className="bg-[#070d1f]">Other</option>
+                <option value="" disabled selected className="bg-[#1e293b]">Select a topic…</option>
+                <option value="project" className="bg-[#1e293b]">New Project Inquiry</option>
+                <option value="collab" className="bg-[#1e293b]">Collaboration / Partnership</option>
+                <option value="job" className="bg-[#1e293b]">Job Opportunity</option>
+                <option value="security" className="bg-[#1e293b]">Security Consultation</option>
+                <option value="other" className="bg-[#1e293b]">Other</option>
               </select>
             </div>
 
             <div className="space-y-1.5">
-              <label className="font-label text-xs text-[#6073ad] uppercase tracking-wider">
+              <label className="font-label text-xs text-[#94a3b8] uppercase tracking-wider">
                 Message <span className="text-[#47c4ff]">*</span>
               </label>
               <textarea
@@ -1078,7 +1089,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
                 placeholder="Tell me about your project or idea…"
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
-                className="w-full bg-[#070d1f] border border-[#32457c]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#dfe4ff] placeholder:text-[#32457c] font-body text-sm outline-none transition-colors resize-none"
+                className="w-full bg-[#1e293b] border border-[#475569]/30 focus:border-[#47c4ff] rounded-lg px-4 py-3 text-[#f1f5f9] placeholder:text-[#475569] font-body text-sm outline-none transition-colors resize-none"
               />
             </div>
 
@@ -1093,15 +1104,15 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 
           {/* Email Fallback for when mailto links don't work */}
           {showEmailFallback && (
-            <div className="mt-8 p-6 bg-[#0a1839] border border-[#32457c]/40 rounded-xl">
+            <div className="mt-8 p-6 bg-[#2d3f55] border border-[#475569]/40 rounded-xl">
               <h3 className="font-label text-[#47c4ff] text-sm uppercase tracking-wider mb-4">
                 Email Client Not Available
               </h3>
-              <p className="font-body text-[#c4c7c9] text-sm mb-4">
+              <p className="font-body text-[#e2e8f0] text-sm mb-4">
                 Please copy the message below and send it to gobinda3113@gmail.com
               </p>
-              <div className="bg-[#070d1f] border border-[#32457c]/30 rounded-lg p-4">
-                <pre className="text-[#dfe4ff] text-sm whitespace-pre-wrap font-mono">
+              <div className="bg-[#1e293b] border border-[#475569]/30 rounded-lg p-4">
+                <pre className="text-[#f1f5f9] text-sm whitespace-pre-wrap font-mono">
                   {emailContent}
                 </pre>
               </div>
@@ -1116,7 +1127,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
               </button>
               <button
                 onClick={() => setShowEmailFallback(false)}
-                className="mt-2 ml-2 bg-[#32457c] text-[#dfe4ff] font-label py-2 px-4 rounded-lg hover:bg-[#40528a] transition-all"
+                className="mt-2 ml-2 bg-[#475569] text-[#f1f5f9] font-label py-2 px-4 rounded-lg hover:bg-[#40528a] transition-all"
               >
                 Close
               </button>
@@ -1130,12 +1141,12 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 
 function Footer() {
   return (
-    <footer className="w-full py-16 border-t border-[#0a2257]/30 bg-[#070d1f]">
+    <footer className="w-full py-16 border-t border-[#3d5470]/30 bg-[#1e293b]">
       <div className="max-w-7xl mx-auto px-8 flex flex-col items-center gap-8">
         {/* Logo */}
         <div className="text-center">
-          <div className="font-headline font-black text-2xl tracking-tighter text-[#dfe4ff]">GOBINDA.AD</div>
-          <p className="font-label text-xs text-[#6073ad] mt-1">Full Stack Architect & Security Researcher</p>
+          <div className="font-headline font-black text-2xl tracking-tighter text-[#f1f5f9]">GOBINDA.AD</div>
+          <p className="font-label text-xs text-[#94a3b8] mt-1">Full Stack Architect & Security Researcher</p>
         </div>
 
         {/* Nav */}
@@ -1144,7 +1155,7 @@ function Footer() {
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
-              className="font-label text-xs uppercase tracking-[0.2em] text-[#6073ad] hover:text-[#47c4ff] transition-colors"
+              className="font-label text-xs uppercase tracking-[0.2em] text-[#94a3b8] hover:text-[#47c4ff] transition-colors"
             >
               {link}
             </a>
@@ -1163,18 +1174,18 @@ function Footer() {
               key={label}
               href={href}
               title={label}
-              className="w-10 h-10 rounded-full bg-[#09122b] border border-[#32457c]/30 flex items-center justify-center text-[#6073ad] hover:text-[#47c4ff] hover:border-[#47c4ff]/40 transition-all"
+              className="w-10 h-10 rounded-full bg-[#263548] border border-[#475569]/30 flex items-center justify-center text-[#94a3b8] hover:text-[#47c4ff] hover:border-[#47c4ff]/40 transition-all"
             >
               <Icon icon={icon} className="text-base" />
             </a>
           ))}
         </div>
 
-        <div className="h-px w-full max-w-sm bg-gradient-to-r from-transparent via-[#32457c]/40 to-transparent" />
+        <div className="h-px w-full max-w-sm bg-gradient-to-r from-transparent via-[#475569]/40 to-transparent" />
 
         <div className="text-center space-y-1">
-          <p className="font-label text-[10px] uppercase tracking-[0.2em] text-[#32457c]">
-            © 2024 Gobinda Adhikari. All rights reserved.
+          <p className="font-label text-[10px] uppercase tracking-[0.2em] text-[#475569]">
+            © 2026 Gobinda Adhikari. All rights reserved.
           </p>
           <p className="font-label text-[10px] text-[#47c4ff] flex items-center justify-center gap-1.5">
             Built with React, Vite & Tailwind CSS{" "}
@@ -1207,11 +1218,11 @@ function Navbar({
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-[#070d1f]/90 backdrop-blur-3xl border-b border-[#0a2257]/40 shadow-lg" : "bg-transparent"
+        scrolled ? "bg-[#1e293b]/90 backdrop-blur-3xl border-b border-[#3d5470]/40 shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="flex justify-between items-center px-8 py-5 max-w-7xl mx-auto">
-        <a href="#" className="text-xl font-black tracking-tighter text-[#dfe4ff] font-headline hover:text-[#47c4ff] transition-colors">
+        <a href="#" className="text-xl font-black tracking-tighter text-[#f1f5f9] font-headline hover:text-[#47c4ff] transition-colors">
           GOBINDA.AD
         </a>
 
@@ -1227,7 +1238,7 @@ function Navbar({
                 className={`font-body text-sm transition-all duration-200 pb-1 ${
                   isActive
                     ? "text-[#47c4ff] border-b-2 border-[#47c4ff]"
-                    : "text-[#c4c7c9] hover:text-[#dfe4ff] border-b-2 border-transparent"
+                    : "text-[#e2e8f0] hover:text-[#f1f5f9] border-b-2 border-transparent"
                 }`}
               >
                 {link}
@@ -1244,7 +1255,7 @@ function Navbar({
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-[#dfe4ff] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#0a1839] transition-colors"
+          className="md:hidden text-[#f1f5f9] w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#2d3f55] transition-colors"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           <Icon icon={mobileOpen ? "mdi:close" : "mdi:menu"} className="text-2xl" />
@@ -1253,13 +1264,13 @@ function Navbar({
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#070d1f]/95 backdrop-blur-3xl border-b border-[#0a2257]/40 px-8 py-6 flex flex-col gap-4 animate-fade-in-up">
+        <div className="md:hidden bg-[#1e293b]/95 backdrop-blur-3xl border-b border-[#3d5470]/40 px-8 py-6 flex flex-col gap-4 animate-fade-in-up">
           {NAV_LINKS.map((link) => (
             <a
               key={link}
               href={`#${link.toLowerCase()}`}
               onClick={() => setMobileOpen(false)}
-              className="font-body text-[#c4c7c9] hover:text-[#47c4ff] py-2 border-b border-[#0a2257]/30 transition-colors"
+              className="font-body text-[#e2e8f0] hover:text-[#47c4ff] py-2 border-b border-[#3d5470]/30 transition-colors"
             >
               {link}
             </a>
@@ -1284,7 +1295,7 @@ function Sidebar({ activeSection }: { activeSection: string }) {
   ];
 
   return (
-    <aside className="fixed left-0 top-0 h-full w-40 hover:w-56 transition-all duration-500 z-40 border-r border-[#0a2257]/20 bg-[#09122b]/80 backdrop-blur-xl hidden lg:flex flex-col py-24 gap-8 px-3 overflow-hidden group">
+    <aside className="fixed left-0 top-0 h-full w-40 hover:w-56 transition-all duration-500 z-40 border-r border-[#3d5470]/20 bg-[#263548]/80 backdrop-blur-xl hidden lg:flex flex-col py-24 gap-8 px-3 overflow-hidden group">
       <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#47c4ff] to-[#2db7f2] flex items-center justify-center shrink-0 mx-auto">
         <span className="font-headline font-black text-[#003b52] text-sm">G</span>
       </div>
@@ -1296,7 +1307,7 @@ function Sidebar({ activeSection }: { activeSection: string }) {
             className={`flex items-center gap-3 px-3 py-3 rounded-xl transition-all ${
               activeSection === label.toLowerCase()
                 ? "bg-[#47c4ff]/10 text-[#47c4ff] border border-[#47c4ff]/20"
-                : "text-[#6073ad] hover:bg-[#0a1839] hover:text-[#dfe4ff]"
+                : "text-[#94a3b8] hover:bg-[#2d3f55] hover:text-[#f1f5f9]"
             }`}
           >
             <Icon icon={icon} className="text-xl shrink-0" />
@@ -1353,7 +1364,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#070d1f] text-[#dfe4ff] min-h-screen">
+    <div className="bg-[#1e293b] text-[#f1f5f9] min-h-screen">
       <Navbar activeSection={activeSection} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <Sidebar activeSection={activeSection} />
 
@@ -1374,7 +1385,7 @@ export default function App() {
       {/* Back to top */}
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#0a1839] border border-[#32457c]/40 flex items-center justify-center text-[#47c4ff] hover:bg-[#47c4ff] hover:text-[#003b52] transition-all shadow-lg z-50"
+        className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#2d3f55] border border-[#475569]/40 flex items-center justify-center text-[#47c4ff] hover:bg-[#47c4ff] hover:text-[#003b52] transition-all shadow-lg z-50"
         title="Back to top"
       >
         <Icon icon="mdi:arrow-up" className="text-lg" />
