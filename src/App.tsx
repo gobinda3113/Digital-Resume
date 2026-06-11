@@ -144,9 +144,9 @@ const SKILLS: Record<string, Skill[]> = {
 };
 
 const STATS = [
-  { label: "Projects Shipped", value: 24, suffix: "+" },
+  { label: "Projects Shipped", value: 10, suffix: "+" },
   { label: "GitHub Contributions", value: 2482, suffix: "+" },
-  { label: "Current Streak", value: 48, suffix: " days" },
+  { label: "Highest Streak", value: 48, suffix: " days" },
   { label: "Open Source PRs", value: 137, suffix: "+" },
 ];
 
@@ -829,7 +829,7 @@ function GitHubSection() {
             <div className="space-y-4">
               {[
                 { label: "Total Contributions", value: "2,482+" },
-                { label: "Current Streak", value: "48 Days" },
+                { label: "Highest Streak", value: "48 Days" },
                 { label: "Repositories", value: "47" },
                 { label: "Stars Earned", value: "312+" },
               ].map(({ label, value }) => (
@@ -1006,7 +1006,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
               { icon: "mdi:github", label: "github.com/gobinda3113", href: "https://github.com/gobinda3113" },
               { icon: "mdi:linkedin", label: "linkedin.com/in/gobinda-adhikari-33bbb2213", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
               { icon: "mdi:facebook", label: "facebook.com/gobinda.adhikari.9634340", href: "https://www.facebook.com/gobinda.adhikari.9634340" },
-              { icon: "mdi:map-marker", label: "Nepal", href: "#" },
+              { icon: "mdi:map-marker", label: "Nepal", href: "https://maps.app.goo.gl/95SiJxzkhA8TdX9x6" },
             ].map(({ icon, label, href }) => (
               <a
                 key={label}
