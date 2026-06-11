@@ -1,3 +1,483 @@
+================================================================================
+  GOBINDA.AD — DIGITAL RESUME: ALL FRONTEND SOURCE CODE
+================================================================================
+
+================================ FILE STRUCTURE ================================
+
+/
+├── index.html                           # HTML shell
+├── package.json                         # Dependencies & scripts
+├── tsconfig.json                        # TypeScript config
+├── vite.config.ts                       # Vite build config
+├── vite-env.d.ts                        # Vite type declarations
+├── src/
+│   ├── main.tsx                         # Entry point
+│   ├── App.tsx                          # All components (~1395 lines)
+│   ├── index.css                        # Tailwind v4 + custom CSS
+│   ├── types/
+│   │   └── index.ts                     # Project, Skill, Toast interfaces
+│   └── utils/
+│       └── cn.ts                        # clsx + tailwind-merge utility
+├── public/
+│   ├── _headers                         # Cloudflare headers
+│   ├── CNAME                            # Custom domain
+│   ├── favicon.ico / .png / .svg        # Brand favicons
+│   ├── robots.txt                       # Crawler rules
+│   └── .well-known/
+│       └── security.txt                 # Security disclosure
+└── design/
+    ├── design.md                        # Design system document
+    └── all_code.txt                     # This file
+
+===============================================================================
+  FILE: index.html
+===============================================================================
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GOBINDA.AD | Full Stack Architect</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;700;800&family=Inter:wght@300;400;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
+===============================================================================
+  FILE: package.json
+===============================================================================
+
+{
+  "name": "gobinda-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Modern portfolio website for Gobinda Adhikari - Full Stack Architect & Security Researcher",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist --dotfiles"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "clsx": "2.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "tailwind-merge": "3.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.17",
+    "@types/node": "^22.0.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.1.1",
+    "gh-pages": "^6.3.0",
+    "node-fetch": "^3.3.2",
+    "tailwindcss": "4.1.17",
+    "typescript": "5.9.3",
+    "vite": "^7.3.2",
+    "vite-plugin-singlefile": "2.3.0"
+  }
+}
+
+===============================================================================
+  FILE: vite.config.ts
+===============================================================================
+
+import path from "path";
+import { fileURLToPath } from "url";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+});
+
+===============================================================================
+  FILE: tsconfig.json
+===============================================================================
+
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "types": ["node"],
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "ignoreDeprecations": "6.0",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src", "vite.config.ts", "vite-env.d.ts"]
+}
+
+===============================================================================
+  FILE: vite-env.d.ts
+===============================================================================
+
+/// <reference types="vite/client" />
+
+declare module '*.jpg' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.jpeg' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.png' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.gif' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.svg' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.webp' {
+  const src: string;
+  export default src;
+}
+
+===============================================================================
+  FILE: src/main.tsx
+===============================================================================
+
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App";
+
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+
+===============================================================================
+  FILE: src/types/index.ts
+===============================================================================
+
+export interface Project {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  longDescription: string;
+  tags: string[];
+  stack: string[];
+  colSpan: string;
+  rowHeight: string;
+  accent: string;
+  status: "Live" | "In Dev" | "Open Source";
+  year: string;
+  links: { live?: string; github?: string };
+}
+
+export interface Skill {
+  name: string;
+  level: number;
+  icon: string;
+}
+
+export interface Toast {
+  id: number;
+  message: string;
+  type: "success" | "info" | "error";
+}
+
+===============================================================================
+  FILE: src/utils/cn.ts
+===============================================================================
+
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+===============================================================================
+  FILE: src/index.css
+===============================================================================
+
+@import "tailwindcss";
+
+@theme {
+  --color-background: #1e293b;
+  --color-surface: #1e293b;
+  --color-surface-dim: #1e293b;
+  --color-surface-bright: #334155;
+  --color-surface-container-lowest: #0f172a;
+  --color-surface-container-low: #263548;
+  --color-surface-container: #2d3f55;
+  --color-surface-container-high: #354a62;
+  --color-surface-container-highest: #3d5470;
+  --color-surface-variant: #3d5470;
+  --color-on-surface: #f1f5f9;
+  --color-on-surface-variant: #cbd5e1;
+  --color-primary: #e2e8f0;
+  --color-primary-dim: #cbd5e1;
+  --color-on-primary: #1e293b;
+  --color-primary-container: #475569;
+  --color-on-primary-container: #f1f5f9;
+  --color-secondary: #94a3b8;
+  --color-secondary-dim: #94a3b8;
+  --color-on-secondary: #0f172a;
+  --color-secondary-container: #475569;
+  --color-on-secondary-container: #e2e8f0;
+  --color-tertiary: #47c4ff;
+  --color-tertiary-dim: #05a9e3;
+  --color-on-tertiary: #003b52;
+  --color-tertiary-container: #2db7f2;
+  --color-on-tertiary-container: #003044;
+  --color-outline: #6073ad;
+  --color-outline-variant: #32457c;
+  --color-error: #ee7d77;
+  --color-on-error: #490106;
+  --color-inverse-surface: #faf8ff;
+  --color-inverse-on-surface: #4f5469;
+  --color-inverse-primary: #5c5f61;
+
+  --font-headline: "Manrope", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-label: "Space Grotesk", sans-serif;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-tertiary);
+  color: var(--color-on-tertiary);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: inherit;
+}
+
+.glass-panel {
+  background: rgba(11, 29, 72, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-background); }
+::-webkit-scrollbar-thumb { background: var(--color-outline); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-tertiary); }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(71, 196, 255, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(71, 196, 255, 0); }
+}
+
+@keyframes typing-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-out-right {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to { width: var(--progress-width); }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(80px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(80px) rotate(-360deg); }
+}
+
+.animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+.animate-fade-in-left { animation: fadeInLeft 0.7s ease-out forwards; }
+.animate-fade-in-right { animation: fadeInRight 0.7s ease-out forwards; }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+
+.typing-cursor::after {
+  content: '|';
+  animation: typing-cursor 1s ease-in-out infinite;
+  color: #47c4ff;
+  margin-left: 2px;
+}
+
+.progress-bar { animation: progress-fill 1.5s ease-out forwards; }
+
+.gradient-text {
+  background: linear-gradient(135deg, #47c4ff, #2db7f2, #47c4ff);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 0;
+}
+
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(71, 196, 255, 0.15) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.project-card {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(71, 196, 255, 0.15);
+}
+
+.nav-link-active {
+  color: #47c4ff;
+  border-bottom: 2px solid #47c4ff;
+}
+
+.toast-enter { animation: slide-in-right 0.4s ease-out forwards; }
+.toast-exit { animation: slide-out-right 0.4s ease-in forwards; }
+
+.modal-backdrop {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.tech-tag {
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tech-tag:hover {
+  background: rgba(71, 196, 255, 0.15);
+  color: #47c4ff;
+  transform: scale(1.05);
+}
+
+.glow-border {
+  box-shadow: 0 0 0 1px rgba(71, 196, 255, 0.3), inset 0 0 40px rgba(71, 196, 255, 0.03);
+}
+
+.glow-border:hover {
+  box-shadow: 0 0 0 1px rgba(71, 196, 255, 0.6), inset 0 0 40px rgba(71, 196, 255, 0.06), 0 10px 40px rgba(71, 196, 255, 0.1);
+}
+
+.contrib-cell {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.contrib-cell:hover {
+  transform: scale(1.5);
+  z-index: 10;
+  position: relative;
+}
+
+===============================================================================
+  FILE: src/App.tsx
+===============================================================================
+
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Icon } from "@iconify/react"; 
 
@@ -246,8 +726,6 @@ function useCountUp(target: number, isVisible: boolean, duration = 2000) {
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
-// Icon component removed - using @iconify/react instead
-
 function StatusBadge({ status }: { status: Project["status"] }) {
   const colors: Record<Project["status"], string> = {
     Live: "bg-green-500/15 text-green-400 border-green-500/30",
@@ -269,11 +747,11 @@ function StatusBadge({ status }: { status: Project["status"] }) {
 
 function Toast({ toasts, remove }: { toasts: Toast[]; remove: (id: number) => void }) {
   return (
-    <div className="fixed top-4 right-4 left-4 sm:left-auto sm:top-6 sm:right-6 z-[200] flex flex-col gap-3 pointer-events-none">
+    <div className="fixed top-6 right-6 z-[200] flex flex-col gap-3 pointer-events-none">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`toast-enter pointer-events-auto flex items-center gap-3 px-5 py-4 rounded-xl border shadow-2xl glass-panel w-full sm:min-w-[280px] sm:w-auto ${
+          className={`toast-enter pointer-events-auto flex items-center gap-3 px-5 py-4 rounded-xl border shadow-2xl glass-panel min-w-[280px] ${
             t.type === "success"
               ? "border-green-500/30 text-green-300"
               : t.type === "error"
@@ -296,9 +774,9 @@ function Toast({ toasts, remove }: { toasts: Toast[]; remove: (id: number) => vo
 }
 
 function ContributionGraph() {
+  const weeks = 32;
   const days = 7;
-  // Generate max weeks, slice to fit on mobile via CSS
-  const allCells = Array.from({ length: 32 }, () =>
+  const cells = Array.from({ length: weeks }, () =>
     Array.from({ length: days }, () => Math.floor(Math.random() * 4))
   );
   const levelColors = [
@@ -309,23 +787,15 @@ function ContributionGraph() {
   ];
 
   return (
-    <div className="w-full overflow-hidden">
-      {/* Mobile: show 16 weeks, sm+: show all 32 */}
-      {[allCells.slice(0, 16), allCells].map((cells, viewIdx) => (
-        <div
-          key={viewIdx}
-          className={`flex gap-[3px] ${viewIdx === 0 ? "sm:hidden" : "hidden sm:flex"}`}
-        >
-          {cells.map((week, wi) => (
-            <div key={wi} className="flex flex-col gap-[3px]">
-              {week.map((level, di) => (
-                <div
-                  key={di}
-                  className={`contrib-cell w-[10px] h-[10px] sm:w-3 sm:h-3 rounded-sm ${levelColors[level]}`}
-                  title={`Level ${level}`}
-                />
-              ))}
-            </div>
+    <div className="flex gap-1 overflow-x-auto pb-2">
+      {cells.map((week, wi) => (
+        <div key={wi} className="flex flex-col gap-1">
+          {week.map((level, di) => (
+            <div
+              key={di}
+              className={`contrib-cell w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-sm ${levelColors[level]}`}
+              title={`Level ${level}`}
+            />
           ))}
         </div>
       ))}
@@ -356,11 +826,11 @@ function SkillBar({ skill, isVisible }: { skill: Skill; isVisible: boolean }) {
 function StatCard({ stat, isVisible }: { stat: typeof STATS[0]; isVisible: boolean }) {
   const count = useCountUp(stat.value, isVisible);
   return (
-    <div className="bg-[#2d3f55] border border-[#475569]/30 rounded-xl p-4 sm:p-6 text-center glow-border transition-all duration-300">
-      <div className="font-headline text-3xl sm:text-4xl font-black text-[#47c4ff] mb-1">
+    <div className="bg-[#2d3f55] border border-[#475569]/30 rounded-xl p-6 text-center glow-border transition-all duration-300">
+      <div className="font-headline text-4xl font-black text-[#47c4ff] mb-1">
         {count.toLocaleString()}{stat.suffix}
       </div>
-      <div className="font-label text-[10px] sm:text-xs text-[#cbd5e1] uppercase tracking-widest">{stat.label}</div>
+      <div className="font-label text-xs text-[#cbd5e1] uppercase tracking-widest">{stat.label}</div>
     </div>
   );
 }
@@ -379,27 +849,27 @@ function ProjectModal({ project, onClose, addToast }: { project: Project; onClos
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 modal-backdrop bg-[#1e293b]/80"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="bg-[#2d3f55] border border-[#475569]/40 rounded-2xl max-w-2xl w-full max-h-[88vh] overflow-y-auto shadow-2xl animate-fade-in-up glow-border">
+      <div className="bg-[#2d3f55] border border-[#475569]/40 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl animate-fade-in-up glow-border">
         <div className={`h-2 rounded-t-2xl bg-gradient-to-r ${project.accent.replace("/20", "").replace("/10", "")} from-[#47c4ff] to-[#2db7f2]`} />
-        <div className="p-5 sm:p-8 space-y-5 sm:space-y-6">
+        <div className="p-8 space-y-6">
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <StatusBadge status={project.status} />
                 <span className="font-label text-xs text-[#cbd5e1]">{project.year}</span>
               </div>
-              <h3 className="font-headline text-2xl sm:text-3xl font-bold text-[#f1f5f9]">{project.title}</h3>
-              <p className="text-[#94a3b8] font-body text-sm sm:text-base mt-1">{project.subtitle}</p>
+              <h3 className="font-headline text-3xl font-bold text-[#f1f5f9]">{project.title}</h3>
+              <p className="text-[#94a3b8] font-body mt-1">{project.subtitle}</p>
             </div>
             <button
               onClick={onClose}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#3d5470] flex items-center justify-center hover:bg-[#475569] transition-colors shrink-0"
+              className="w-10 h-10 rounded-full bg-[#3d5470] flex items-center justify-center hover:bg-[#475569] transition-colors shrink-0"
             >
               <Icon icon="mdi:close" className="text-[#f1f5f9] text-lg" />
             </button>
           </div>
 
-          <p className="font-body text-sm sm:text-base text-[#e2e8f0] leading-relaxed">{project.longDescription}</p>
+          <p className="font-body text-[#e2e8f0] leading-relaxed">{project.longDescription}</p>
 
           <div>
             <h4 className="font-label text-xs text-[#47c4ff] uppercase tracking-widest mb-3">Tech Stack</h4>
@@ -432,7 +902,6 @@ function ProjectModal({ project, onClose, addToast }: { project: Project; onClos
                 </button>
               )
             )}
-
           </div>
         </div>
       </div>
@@ -446,7 +915,7 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
   const typedRole = useTypingEffect(roles);
 
   return (
-    <section className="min-h-screen flex flex-col justify-center px-5 sm:px-8 md:px-24 pt-16 sm:pt-20 pb-12 sm:pb-16 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col justify-center px-8 md:px-24 pt-24 relative overflow-hidden">
       {/* Decorative blobs */}
       <div className="absolute top-1/4 right-0 w-[600px] h-[600px] bg-[#47c4ff]/8 blur-[120px] rounded-full -z-10 animate-float" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#2db7f2]/5 blur-[100px] rounded-full -z-10" />
@@ -454,51 +923,51 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
       <div className="absolute inset-0 dot-pattern opacity-30 -z-10" />
 
       <div className="max-w-6xl mx-auto w-full grid md:grid-cols-12 gap-12 items-center">
-        <div className="md:col-span-7 space-y-8 order-1">
+        <div className="md:col-span-7 space-y-8">
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <div className="h-px w-12 bg-[#47c4ff]" />
-              <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-[10px] sm:text-xs">
+              <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">
                 Architecting Digital Futures
               </span>
             </div>
-            <h1 className="font-headline text-5xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter text-[#f1f5f9] leading-[1.05]">
+            <h1 className="font-headline text-6xl md:text-8xl font-extrabold tracking-tighter text-[#f1f5f9] leading-none">
               Gobinda <br />
               <span className="gradient-text">Adhikari</span>
             </h1>
             <div className="h-10 flex items-center">
-              <p className="font-body text-lg sm:text-xl text-[#94a3b8] typing-cursor">{typedRole}</p>
+              <p className="font-body text-xl text-[#94a3b8] typing-cursor">{typedRole}</p>
             </div>
           </div>
 
-          <p className="font-body text-base sm:text-lg text-[#e2e8f0] max-w-lg leading-relaxed">
+          <p className="font-body text-lg text-[#e2e8f0] max-w-lg leading-relaxed">
             Building resilient, scalable architectures that solve real-world complexities — from pixel-perfect UIs to battle-hardened security systems.
           </p>
 
-          <div className="flex flex-wrap gap-3 sm:gap-4">
+          <div className="flex flex-wrap gap-4">
             <button
               onClick={onCTA}
-              className="group bg-gradient-to-br from-[#47c4ff] to-[#05a9e3] text-[#003b52] px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-label font-bold flex items-center gap-2 hover:scale-[1.03] transition-transform shadow-lg shadow-[#47c4ff]/20 text-sm sm:text-base"
+              className="group bg-gradient-to-br from-[#47c4ff] to-[#05a9e3] text-[#003b52] px-8 py-4 rounded-xl font-label font-bold flex items-center gap-2 hover:scale-[1.03] transition-transform shadow-lg shadow-[#47c4ff]/20"
             >
               View Projects{" "}
               <Icon icon="mdi:arrow-forward" className="text-lg group-hover:translate-x-1 transition-transform" />
             </button>
             <a
               href="#contact"
-              className="bg-[#334155] border border-[#475569]/40 text-[#f1f5f9] px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-label font-bold hover:bg-[#3d5470] hover:border-[#47c4ff]/30 transition-all text-sm sm:text-base"
+              className="bg-[#334155] border border-[#475569]/40 text-[#f1f5f9] px-8 py-4 rounded-xl font-label font-bold hover:bg-[#3d5470] hover:border-[#47c4ff]/30 transition-all"
             >
               Contact Me
             </a>
             <a
               href="#"
-              className="flex items-center gap-2 text-[#94a3b8] px-4 py-3.5 sm:py-4 font-label font-bold hover:text-[#47c4ff] transition-colors text-sm sm:text-base"
+              className="flex items-center gap-2 text-[#94a3b8] px-4 py-4 font-label font-bold hover:text-[#47c4ff] transition-colors"
             >
               <Icon icon="mdi:download" className="text-lg" /> Resume
             </a>
           </div>
 
           {/* Social strip */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-3 pt-2">
+          <div className="flex items-center gap-5 pt-2">
             {[
               { icon: "mdi:github", label: "GitHub", href: "https://github.com/gobinda3113" },
               { icon: "mdi:linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/gobinda-adhikari-33bbb2213" },
@@ -515,11 +984,11 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
           </div>
         </div>
 
-        <div className="md:col-span-5 flex justify-center relative order-2">
+        <div className="md:col-span-5 flex justify-center relative">
           {/* Avatar ring */}
           <div className="relative">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#47c4ff]/20 to-transparent blur-md animate-pulse-glow" />
-            <div className="w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#475569]/40 relative group glow-border">
+            <div className="w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-[#475569]/40 relative group glow-border">
               <img
                  src="https://i.ibb.co/d47mWy7h/Chat-GPT-Image-Apr-2-2026-08-33-06-AM.jpg"
                 alt="Gobinda Adhikari"
@@ -563,8 +1032,8 @@ function HeroSection({ onCTA }: { onCTA: () => void }) {
 function StatsSection() {
   const { ref, isVisible } = useIntersectionObserver();
   return (
-    <section ref={ref as React.RefObject<HTMLElement>} className="py-16 md:py-20 px-5 sm:px-8 md:px-24 bg-[#263548] border-y border-[#3d5470]">
-      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+    <section ref={ref as React.RefObject<HTMLElement>} className="py-20 px-8 md:px-24 bg-[#263548] border-y border-[#3d5470]">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
         {STATS.map((stat) => (
           <StatCard key={stat.label} stat={stat} isVisible={isVisible} />
         ))}
@@ -581,25 +1050,25 @@ function TechSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-12 md:py-32 px-5 sm:px-8 md:px-24"
+      className="py-32 px-8 md:px-24"
       id="tech"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="text-center mb-8 md:mb-16">
-          <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-[10px] sm:text-xs">Arsenal</span>
-          <h2 className="font-headline text-2xl sm:text-4xl md:text-5xl font-extrabold mt-2 mb-2">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">Arsenal</span>
+          <h2 className="font-headline text-5xl font-extrabold mt-2 mb-4">
             Mastering the <span className="gradient-text">Stack</span>
           </h2>
-          <p className="font-body text-sm sm:text-base text-[#94a3b8]">From hardware logic to pixel-perfect interfaces</p>
+          <p className="font-body text-[#94a3b8]">From hardware logic to pixel-perfect interfaces</p>
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-6 md:mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full font-label text-xs sm:text-sm transition-all duration-300 ${
+              className={`px-5 py-2 rounded-full font-label text-sm transition-all duration-300 ${
                 activeCategory === cat
                   ? "bg-[#47c4ff] text-[#003b52] font-bold shadow-lg shadow-[#47c4ff]/20"
                   : "bg-[#2d3f55] border border-[#475569]/30 text-[#94a3b8] hover:border-[#47c4ff]/40 hover:text-[#f1f5f9]"
@@ -611,16 +1080,16 @@ function TechSection() {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6 w-full">
+        <div className="grid md:grid-cols-2 gap-6">
           {SKILLS[activeCategory].map((skill) => (
-            <div key={skill.name} className="w-full bg-[#2d3f55] border border-[#475569]/20 rounded-xl p-4 sm:p-6 glow-border">
+            <div key={skill.name} className="bg-[#2d3f55] border border-[#475569]/20 rounded-xl p-6 glow-border">
               <SkillBar skill={skill} isVisible={isVisible} />
             </div>
           ))}
         </div>
 
         {/* Tag cloud */}
-        <div className="mt-10 md:mt-16 text-center">
+        <div className="mt-16 text-center">
           <p className="font-label text-xs text-[#47c4ff] uppercase tracking-widest mb-6">Also Proficient With</p>
           <div className="flex flex-wrap justify-center gap-2">
             {["Figma", "GraphQL", "Prisma", "Jest", "Webpack", "Nginx", "AWS", "Vercel", "Supabase", "Cloudflare", "n8n", "Electron", "React Native", "Vim/Neovim", "Kali Linux", "Metasploit", "Wireshark"].map((tag) => (
@@ -641,13 +1110,13 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
   const filters = ["All", "Cybersecurity", "E-Commerce", "Open Source", "Analytics"];
 
   return (
-    <section className="py-20 md:py-32 px-5 sm:px-8 md:px-24 bg-[#1e293b]" id="work">
+    <section className="py-32 px-8 md:px-24 bg-[#1e293b]" id="work">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 md:mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-[10px] sm:text-xs">Portfolio</span>
-            <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#f1f5f9] mt-1">Selected Works</h2>
-            <p className="text-sm sm:text-base text-[#94a3b8] mt-2 font-body">Engineering solutions across the full stack spectrum.</p>
+            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">Portfolio</span>
+            <h2 className="font-headline text-5xl font-extrabold text-[#f1f5f9] mt-1">Selected Works</h2>
+            <p className="text-[#94a3b8] mt-2 font-body">Engineering solutions across the full stack spectrum.</p>
           </div>
           <a
             href="https://github.com/gobinda3113?tab=repositories"
@@ -685,7 +1154,7 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${project.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-              <div className={`${project.rowHeight} relative flex flex-col justify-between p-6 sm:p-8`}>
+              <div className={`${project.rowHeight} relative flex flex-col justify-between p-8`}>
                 {/* Top row */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -700,15 +1169,15 @@ function WorkSection({ addToast }: { addToast: (msg: string, type: Toast["type"]
 
                 {/* Bottom content */}
                 <div className="space-y-3">
-                  <div className="flex items-end justify-between gap-3">
+                  <div className="flex items-end justify-between">
                     <div>
                       <p className="font-label text-[#47c4ff] text-xs mb-1">{project.year}</p>
-                      <h3 className="font-headline text-xl sm:text-2xl md:text-3xl font-bold text-[#f1f5f9] group-hover:text-white transition-colors">
+                      <h3 className="font-headline text-2xl md:text-3xl font-bold text-[#f1f5f9] group-hover:text-white transition-colors">
                         {project.title}
                       </h3>
                       <p className="text-[#94a3b8] font-body text-sm mt-1 max-w-sm">{project.description}</p>
                     </div>
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#3d5470] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-[#3d5470] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
                       <Icon icon="mdi:arrow-top-right" className="text-lg" />
                     </div>
                   </div>
@@ -751,19 +1220,19 @@ function AboutSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-20 md:py-32 px-5 sm:px-8 md:px-24 bg-[#263548]"
+      className="py-32 px-8 md:px-24 bg-[#263548]"
       id="about"
     >
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-24 items-start">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-24 items-start">
         {/* Left: Story + Timeline */}
         <div className={`space-y-10 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
           <div>
             <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">The Story</span>
-            <h2 className="font-headline text-3xl sm:text-4xl font-bold tracking-tight text-[#f1f5f9] mt-2 flex items-center gap-4">
+            <h2 className="font-headline text-4xl font-bold tracking-tight text-[#f1f5f9] mt-2 flex items-center gap-4">
               <span className="w-12 h-px bg-[#47c4ff]" /> The Journey
             </h2>
           </div>
-          <div className="space-y-6 font-body text-base sm:text-lg text-[#e2e8f0] leading-relaxed">
+          <div className="space-y-6 font-body text-lg text-[#e2e8f0] leading-relaxed">
             <p>
               I'm a passionate Full Stack Developer specializing in high-performance, scalable web applications. My work is fueled by deep curiosity about Cloud Architecture, DevOps pipelines, and the human problems they solve.
             </p>
@@ -803,11 +1272,11 @@ function AboutSection() {
           ].map((card) => (
             <div
               key={card.label}
-              className="bg-[#2d3f55] border border-[#475569]/20 p-4 sm:p-6 rounded-xl glow-border transition-all duration-300"
+              className="bg-[#2d3f55] border border-[#475569]/20 p-6 rounded-xl glow-border transition-all duration-300"
             >
               <Icon icon={card.icon} className="text-[#47c4ff] text-2xl mb-3 block" />
-              <h4 className="font-label font-bold text-sm sm:text-base text-[#f1f5f9] mb-1.5">{card.label}</h4>
-              <p className="text-[10px] sm:text-xs text-[#94a3b8] leading-relaxed">{card.desc}</p>
+              <h4 className="font-label font-bold text-[#f1f5f9] mb-1.5">{card.label}</h4>
+              <p className="text-[10px] text-[#94a3b8] leading-relaxed">{card.desc}</p>
             </div>
           ))}
         </div>
@@ -822,19 +1291,19 @@ function GitHubSection() {
   return (
     <section
       ref={ref as React.RefObject<HTMLElement>}
-      className="py-12 md:py-32 px-5 sm:px-8 md:px-24 border-y border-[#3d5470]"
+      className="py-32 px-8 md:px-24 border-y border-[#3d5470]"
     >
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-12 gap-6 md:gap-12 items-center">
+        <div className="grid md:grid-cols-12 gap-12 items-center">
           <div className={`md:col-span-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
-            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-[10px] sm:text-xs">GitHub Activity</span>
-            <h2 className="font-headline text-2xl sm:text-4xl font-extrabold mb-3 mt-2">
+            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">GitHub Activity</span>
+            <h2 className="font-headline text-4xl font-extrabold mb-6 mt-2">
               Coding <span className="gradient-text">Consistency</span>
             </h2>
-            <p className="text-[#94a3b8] leading-relaxed font-body text-sm mb-4">
+            <p className="text-[#94a3b8] leading-relaxed font-body mb-8">
               My GitHub is a living map of growth. I believe in the power of continuous iteration — shipping small, thinking big.
             </p>
-            <div className="space-y-2">
+            <div className="space-y-4">
               {[
                 { label: "Total Contributions", value: "2,482+" },
                 { label: "Highest Streak", value: "48 Days" },
@@ -843,7 +1312,7 @@ function GitHubSection() {
               ].map(({ label, value }) => (
                 <div key={label} className="flex justify-between items-end border-b border-[#475569]/20 pb-2">
                   <span className="font-label text-xs uppercase text-[#94a3b8]">{label}</span>
-                  <span className="font-headline text-base sm:text-xl font-bold text-[#f1f5f9]">{value}</span>
+                  <span className="font-headline text-xl font-bold text-[#f1f5f9]">{value}</span>
                 </div>
               ))}
             </div>
@@ -851,14 +1320,14 @@ function GitHubSection() {
               href="https://github.com/gobinda3113?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-label text-sm text-[#47c4ff] hover:text-[#f1f5f9] transition-colors mt-4"
+              className="inline-flex items-center gap-2 font-label text-sm text-[#47c4ff] hover:text-[#f1f5f9] transition-colors mt-6"
             >
               View All Repositories
               <Icon icon="mdi:arrow-top-right" className="text-base" />
             </a>
           </div>
 
-          <div className={`md:col-span-8 min-w-0 overflow-hidden bg-[#2d3f55] p-4 sm:p-8 rounded-2xl border border-[#475569]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+          <div className={`md:col-span-8 bg-[#2d3f55] p-8 rounded-2xl border border-[#475569]/20 glow-border transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
             <div className="flex justify-between items-center mb-6">
               <a href="https://github.com/gobinda3113?tab=repositories" target="_blank" rel="noopener noreferrer" className="font-label text-sm text-[#47c4ff] hover:text-[#f1f5f9] transition-colors">github.com/gobinda3113</a>
               <div className="flex items-center gap-3">
@@ -894,18 +1363,18 @@ function GitHubSection() {
 
 function PhilosophySection() {
   return (
-    <section className="py-28 md:py-48 px-5 sm:px-8 md:px-24 bg-[#1e293b] overflow-hidden relative" id="philosophy">
+    <section className="py-48 px-8 md:px-24 bg-[#1e293b] overflow-hidden relative" id="philosophy">
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none">
-        <span className="font-headline text-[22vw] md:text-[15vw] font-black text-[#f1f5f9]/3 whitespace-nowrap">
+        <span className="font-headline text-[15vw] font-black text-[#f1f5f9]/3 whitespace-nowrap">
           INNOVATION
         </span>
       </div>
       <div className="absolute inset-0 dot-pattern opacity-20" />
 
       <div className="max-w-4xl mx-auto relative text-center">
-        <Icon icon="mdi:format-quote-open" className="text-[#47c4ff] text-5xl sm:text-6xl mb-8 sm:mb-12 block" />
+        <Icon icon="mdi:format-quote-open" className="text-[#47c4ff] text-6xl mb-12 block" />
 
-        <blockquote className="font-headline text-2xl sm:text-4xl md:text-6xl font-light italic text-[#f1f5f9] leading-tight">
+        <blockquote className="font-headline text-4xl md:text-6xl font-light italic text-[#f1f5f9] leading-tight">
           "Code is not just syntax — it's the{" "}
           <span className="font-extrabold not-italic gradient-text underline decoration-2 underline-offset-8">
             blueprint
@@ -922,7 +1391,7 @@ function PhilosophySection() {
         </div>
 
         {/* Principles */}
-        <div className="mt-14 md:mt-20 grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-left">
+        <div className="mt-20 grid md:grid-cols-3 gap-6 text-left">
           {[
             { icon: "shield", title: "Security First", desc: "Every system I build is designed with threat modeling and defense-in-depth from day zero." },
             { icon: "speed", title: "Performance Obsessed", desc: "Milliseconds matter. I optimize for real users on real devices, not just benchmarks." },
@@ -952,37 +1421,29 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
       return;
     }
     
-    // Create mailto link that opens user's email client
     const subject = form.subject ? form.subject : `Contact from ${form.name}`;
     const body = `Name: ${form.name}%0D%0AEmail: ${form.email}%0D%0A%0D%0A${form.message.replace(/\n/g, '%0D%0A')}`;
     
     const mailtoLink = `mailto:gobinda3113@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
     
-    // Check if we're likely in a web environment where mailto might be blocked
     const isWebEnvironment = window.location.protocol === 'https:' || window.location.protocol === 'http:';
     
     if (isWebEnvironment) {
-      // In web environments, show the fallback immediately to avoid network errors
       const emailText = `To: gobinda3113@gmail.com\nSubject: ${subject}\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
       setEmailContent(emailText);
       setShowEmailFallback(true);
       addToast("Please copy the message below to send via email", "info");
     } else {
-      // For local development, try the mailto link
       try {
-        // Method 1: Try opening in new tab/window first (more reliable for web)
         const mailtoWindow = window.open(mailtoLink, '_blank');
         
-        // If that fails or is blocked, fall back to location.href
         if (!mailtoWindow || mailtoWindow.closed || typeof mailtoWindow.closed === 'undefined') {
           window.location.href = mailtoLink;
         }
         
-        // Show success message
         addToast("Opening your email client to send message... ✉️", "success");
         setForm({ name: "", email: "", subject: "", message: "" });
       } catch (error) {
-        // If both methods fail, show the email content as fallback
         const emailText = `To: gobinda3113@gmail.com\nSubject: ${subject}\n\nName: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`;
         setEmailContent(emailText);
         setShowEmailFallback(true);
@@ -993,18 +1454,18 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
   };
 
   return (
-    <section className="py-20 md:py-32 px-5 sm:px-8 md:px-24 bg-[#263548]" id="contact">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16">
+    <section className="py-32 px-8 md:px-24 bg-[#263548]" id="contact">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
         {/* Left */}
         <div className="space-y-8">
           <div>
-            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-[10px] sm:text-xs">Get In Touch</span>
-            <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2">
+            <span className="font-label text-[#47c4ff] tracking-[0.3em] uppercase text-xs">Get In Touch</span>
+            <h2 className="font-headline text-5xl font-extrabold mt-2">
               Let's build <br />
               <span className="gradient-text">Together.</span>
             </h2>
           </div>
-          <p className="font-body text-base sm:text-xl text-[#e2e8f0] leading-relaxed max-w-md">
+          <p className="font-body text-xl text-[#e2e8f0] leading-relaxed max-w-md">
             Have a project in mind? Want to discuss systems architecture or just connect? My door is always open for innovators.
           </p>
 
@@ -1019,12 +1480,12 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
               <a
                 key={label}
                 href={href}
-                className="flex items-center gap-4 group min-w-0"
+                className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 rounded-full bg-[#2d3f55] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300 shrink-0">
+                <div className="w-12 h-12 rounded-full bg-[#2d3f55] border border-[#475569]/30 flex items-center justify-center text-[#47c4ff] group-hover:bg-[#47c4ff] group-hover:text-[#003b52] transition-all duration-300">
                   <Icon icon={icon} />
                 </div>
-                <span className="font-label text-sm sm:text-base text-[#e2e8f0] group-hover:text-[#47c4ff] transition-colors break-all">{label}</span>
+                <span className="font-label text-[#e2e8f0] group-hover:text-[#47c4ff] transition-colors">{label}</span>
               </a>
             ))}
           </div>
@@ -1042,8 +1503,8 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
         </div>
 
         {/* Right: Form */}
-        <div className="bg-[#2d3f55] p-6 sm:p-8 md:p-10 rounded-2xl border border-[#475569]/20 shadow-2xl glow-border">
-          <h3 className="font-headline text-xl sm:text-2xl font-bold text-[#f1f5f9] mb-6 sm:mb-8">Send a Message</h3>
+        <div className="bg-[#2d3f55] p-8 md:p-10 rounded-2xl border border-[#475569]/20 shadow-2xl glow-border">
+          <h3 className="font-headline text-2xl font-bold text-[#f1f5f9] mb-8">Send a Message</h3>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-1.5">
@@ -1150,7 +1611,7 @@ function ContactSection({ addToast }: { addToast: (msg: string, type: Toast["typ
 function Footer() {
   return (
     <footer className="w-full py-16 border-t border-[#3d5470]/30 bg-[#1e293b]">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 flex flex-col items-center gap-8">
+      <div className="max-w-7xl mx-auto px-8 flex flex-col items-center gap-8">
         {/* Logo */}
         <div className="text-center">
           <div className="font-headline font-black text-2xl tracking-tighter text-[#f1f5f9]">GOBINDA.AD</div>
@@ -1229,7 +1690,7 @@ function Navbar({
         scrolled ? "bg-[#1e293b]/90 backdrop-blur-3xl border-b border-[#3d5470]/40 shadow-lg" : "bg-transparent"
       }`}
     >
-      <div className="flex justify-between items-center px-5 sm:px-8 py-4 sm:py-5 max-w-7xl mx-auto">
+      <div className="flex justify-between items-center px-8 py-5 max-w-7xl mx-auto">
         <a href="#" className="text-xl font-black tracking-tighter text-[#f1f5f9] font-headline hover:text-[#47c4ff] transition-colors">
           GOBINDA.AD
         </a>
@@ -1272,7 +1733,7 @@ function Navbar({
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#1e293b]/95 backdrop-blur-3xl border-b border-[#3d5470]/40 px-5 sm:px-8 py-6 flex flex-col gap-4 animate-fade-in-up">
+        <div className="md:hidden bg-[#1e293b]/95 backdrop-blur-3xl border-b border-[#3d5470]/40 px-8 py-6 flex flex-col gap-4 animate-fade-in-up">
           {NAV_LINKS.map((link) => (
             <a
               key={link}

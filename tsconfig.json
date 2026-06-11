@@ -22,7 +22,7 @@
     },
 
     /* Add this line to fix the deprecation warning */
-    "ignoreDeprecations": "6.0",
+    "ignoreDeprecations": "5.0",
 
     /* Linting */
     "strict": true,
